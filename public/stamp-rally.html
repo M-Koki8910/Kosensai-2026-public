@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭を巡って楽しめるスタンプラリーの案内ページです。">
+    <meta property="og:title" content="スタンプラリー | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭を巡って楽しめるスタンプラリーの案内ページです。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/stamp-rally.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <title>スタンプラリー｜高専祭特設WEBページ</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.7.0/minified/html5-qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+
+    <style>
+        /* ============================================
+   スキャンラインアニメーション関連
+   ============================================ */
+
+        /**
+ * スキャンライン要素
+ * モーダル内のカメラ表示エリアに被せる走査線
+ */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to bottom,
+                    transparent 0%,
+                    rgba(34, 197, 94, 0.8) 20%,
+                    rgba(34, 197, 94, 1) 50%,
+                    rgba(34, 197, 94, 0.8) 80%,
+                    transparent 100%);
+            box-shadow:
+                0 0 10px rgba(34, 197, 94, 0.6),
+                0 0 20px rgba(34, 197, 94, 0.3);
+            pointer-events: none;
+            will-change: transform;
+            z-index: 10;
+        }
+
+        /* カメラ読み取り中の状態：スキャンラインを表示 */
+        #scan-modal.is-success .scan-line {
+            opacity: 1;
+        }
+
+        /* スキャンライン領域の背景グロー効果（オプション） */
+        #scan-modal.is-success #reader {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* スキャンライン周辺に淡いグロー を追加するなら以下を有効化 */
+        #scan-modal.is-success #reader::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center,
+                    rgba(34, 197, 94, 0.05) 0%,
+                    transparent 70%);
+            pointer-events: none;
+            animation: scanPulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes scanPulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* ============================================
+   チェックマークアニメーション
+   ============================================ */
+
+        /**
+ * スキャン成功時のチェックマーク
+ * SVGまたはテキスト要素として実装
+ */
+        #scan-success {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 80px;
+            color: #22c55e;
+            opacity: 0;
+            pointer-events: none;
+            transition: none;
+            will-change: transform, opacity;
+        }
+
+        /* is-visible クラスでチェックマーク表示 */
+        #scan-success.is-visible {
+            animation: checkmarkPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes checkmarkPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(-20deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(10deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        /* チェックマークの余韻（わずかな動き） */
+        #scan-success.is-visible::before {
+            content: '';
+            position: absolute;
+            inset: -30px;
+            border: 3px solid rgba(34, 197, 94, 0.2);
+            border-radius: 50%;
+            animation: checkmarkRing 0.6s ease-out;
+        }
+
+        @keyframes checkmarkRing {
+            0% {
+                opacity: 1;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        /* ============================================
+   モーダル状態別スタイル
+   ============================================ */
+
+        /**
+ * is-scanning: 読み取り待機中
+ * - スキャンラインなし
+ * - ガイドフレームのみ
+ */
+        #scan-modal.is-scanning {
+            /* 基本状態 */
+        }
+
+        /**
+ * is-success: 読み取り完了直後
+ * - スキャンラインが流れている
+ * - チェックマーク表示準備
+ * - 背景のトーン調整（読み取り感を演出）
+ */
+        #scan-modal.is-success #reader {
+            background: linear-gradient(135deg,
+                    rgba(34, 197, 94, 0.02) 0%,
+                    rgba(59, 130, 246, 0.02) 100%);
+        }
+
+        /**
+ * is-loading: スタンプ記録中
+ * - スキャンラインなし
+ * - ローディング表示
+ */
+        #scan-modal.is-loading {
+            opacity: 0.9;
+        }
+
+        #scan-modal.is-loading #reader {
+            position: relative;
+        }
+
+        #scan-modal.is-loading #reader::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 20;
+        }
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /**
+ * is-error: エラー状態
+ * - スキャンラインなし
+ * - エラー表示
+ */
+        #scan-modal.is-error {
+            /* エラースタイル */
+        }
+
+        #scan-modal.is-error #reader {
+            background: linear-gradient(135deg,
+                    rgba(239, 68, 68, 0.05) 0%,
+                    rgba(251, 146, 60, 0.05) 100%);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* ============================================
+   ガイドフレーム（既存のQR読み取り枠）
+   ============================================ */
+
+        /**
+ * QRコード読み取りのガイドフレーム
+ * スキャンラインが流れるエリアの上に配置
+ */
+        .qr-guide-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            height: 260px;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: 5;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 読み取り中はガイドフレームを強調 */
+        #scan-modal.is-success .qr-guide-frame {
+            border-color: #22c55e;
+            border-width: 2px;
+            box-shadow:
+                0 0 0 9999px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(34, 197, 94, 0.2);
+        }
+
+        /* ============================================
+   トランジション・アニメーション調整
+   ============================================ */
+
+        /* モーダル状態遷移のスムーズさ */
+        #scan-modal {
+            transition: opacity 0.3s ease;
+        }
+
+        #scan-modal.is-closing {
+            opacity: 0;
+        }
+
+        /* メッセージテキストのフェード */
+        #scan-status {
+            transition: opacity 0.2s ease;
+        }
+
+        /* ============================================
+   アクセシビリティ関連
+   ============================================ */
+
+        /* 高コントラストモード対応 */
+        @media (prefers-contrast: more) {
+            .scan-line {
+                height: 3px;
+                opacity: 1 !important;
+            }
+
+            #scan-success {
+                filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.8));
+            }
+        }
+
+        /* 動きの削減設定に対応 */
+        @media (prefers-reduced-motion: reduce) {
+            .scan-line {
+                animation: none;
+                top: 33.33%;
+            }
+
+            #scan-success.is-visible {
+                animation: none;
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+
+            #scan-success.is-visible::before {
+                animation: none;
+                opacity: 0;
+            }
+
+            #scan-modal.is-loading #reader::before {
+                animation: none;
+                border-top-color: #999;
+            }
+
+            scanPulse {
+                animation: none;
+            }
+        }
+
+        /* ============================================
+   レスポンシブ調整
+   ============================================ */
+
+        /* モバイル・小画面対応 */
+        @media (max-width: 640px) {
+            .scan-line {
+                height: 1.5px;
+            }
+
+            #scan-success {
+                font-size: 60px;
+            }
+
+            .qr-guide-frame {
+                width: 220px;
+                height: 220px;
+            }
+        }
+
+        /* =========================================
+   スタンプラリー：概要・参加方法
+   ========================================= */
+
+        .stamp-about {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* 概要文 */
+        .stamp-about .stamp-intro {
+            max-width: 760px;
+            margin: 0 auto 36px;
+            text-align: center;
+            font-size: 0.8rem;
+            line-height: 1.9;
+            color: #475569;
+        }
+
+
+        /* =========================================
+   参加方法
+   ========================================= */
+
+        .stamp-howto {
+            margin-top: 32px;
+        }
+
+        .stamp-howto>h3 {
+            margin: 0 0 20px;
+            text-align: center;
+            font-size: 1.35rem;
+            color: #1e3a8a;
+        }
+
+
+        /* 3ステップ */
+        .stamp-howto-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+
+        /* 各ステップ */
+        .stamp-howto-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 22px 24px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            text-align: center;
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .stamp-howto-item:hover {
+            transform: translateY(-3px);
+            border-color: #93c5fd;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+        }
+
+
+        /* 番号 */
+        .stamp-howto-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 52px;
+            height: 52px;
+            margin-bottom: 18px;
+
+            border-radius: 50%;
+
+            background: linear-gradient(135deg,
+                    #2563eb,
+                    #38bdf8);
+
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+
+            box-shadow:
+                0 5px 14px rgba(37, 99, 235, 0.25);
+        }
+
+
+        /* ステップ見出し */
+        .stamp-howto-item h4 {
+            margin: 0 0 9px;
+
+            color: #1e293b;
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+
+        /* ステップ説明 */
+        .stamp-howto-item p {
+            margin: 0;
+
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+   ご利用について
+   ========================================= */
+
+        .stamp-notice {
+            margin-top: 36px;
+            padding: 22px 26px;
+
+            background: #f8fafc;
+            border-left: 4px solid #f8aa3d;
+            border-radius: 0 12px 12px 0;
+        }
+
+
+        /* 見出し */
+        .stamp-notice h3 {
+            margin: 0 0 12px;
+
+            color: #1e3a8a;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+
+        /* リスト */
+        .stamp-notice ul {
+            margin: 0;
+            padding-left: 1.3rem;
+
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .stamp-notice li {
+            padding-left: 4px;
+        }
+
+
+        /* =========================================
+   タブレット
+   ========================================= */
+
+        @media (max-width: 768px) {
+
+            .stamp-about .stamp-intro {
+                margin-bottom: 30px;
+                font-size: 0.9rem;
+                line-height: 1.8;
+            }
+
+            .stamp-howto-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .stamp-howto-item {
+                display: grid;
+                grid-template-columns: 52px 1fr;
+                column-gap: 16px;
+
+                align-items: center;
+
+                padding: 18px 20px;
+
+                text-align: left;
+            }
+
+            .stamp-howto-number {
+                grid-row: 1 / span 2;
+
+                width: 48px;
+                height: 48px;
+                margin: 0;
+            }
+
+            .stamp-howto-item h4 {
+                margin-bottom: 4px;
+            }
+
+            .stamp-howto-item p {
+                font-size: 0.88rem;
+            }
+
+            .stamp-notice {
+                margin-top: 28px;
+                padding: 20px;
+            }
+        }
+
+
+        /* =========================================
+   スマートフォン
+   ========================================= */
+
+        @media (max-width: 480px) {
+
+            .stamp-about .stamp-intro {
+                text-align: left;
+                font-size: 0.9rem;
+            }
+
+            .stamp-howto {
+                margin-top: 26px;
+            }
+
+            .stamp-howto>h3 {
+                font-size: 1.2rem;
+            }
+
+            .stamp-howto-item {
+                grid-template-columns: 44px 1fr;
+                column-gap: 13px;
+
+                padding: 16px;
+                border-radius: 13px;
+            }
+
+            .stamp-howto-number {
+                width: 44px;
+                height: 44px;
+
+                font-size: 0.85rem;
+            }
+
+            .stamp-howto-item h4 {
+                font-size: 0.95rem;
+            }
+
+            .stamp-howto-item p {
+                font-size: 0.82rem;
+                line-height: 1.6;
+            }
+
+            .stamp-notice {
+                padding: 17px 18px;
+            }
+
+            .stamp-notice h3 {
+                font-size: 0.95rem;
+            }
+
+            .stamp-notice ul {
+                font-size: 0.82rem;
+                line-height: 1.7;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+                    <!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->
+                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero"
+            style="background-image: linear-gradient(rgba(15,23,42,0.55), rgba(15,23,42,0.55)), url('/images/logo.png'); height: 35vh; min-height: 100px;">
+            <div class="hero-text">
+                <p class="guest-label">KOSENSAI STAMP RALLY</p>
+                <h1>会場を巡って</h1>
+                <h1>スタンプを集めよう</h1>
+                <p>QRコードを読み取り</p>
+                <p>スタンプを集めて景品をゲット！</p>
+            </div>
+        </section>
+
+        <!--   <section class="container-section">
+            <h2>スタンプラリーとは</h2>
+            <p class="stamp-intro"></p>
+            </p>
+        </section> -->
+
+        <section class="container-section" id="stamp-rally-start">
+            <section class="container-section stamp-about">
+                <h2>参加方法</h2>
+
+                <div class="stamp-howto">
+                    <div class="stamp-howto-grid">
+                        <div class="stamp-howto-item">
+                            <span class="stamp-howto-number">01</span>
+                            <div>
+                                <h4>スタンプラリーを開始</h4>
+                                <p>下のボタンからスタンプラリーを始めます。</p>
+                            </div>
+                        </div>
+
+                        <div class="stamp-howto-item">
+                            <span class="stamp-howto-number">02</span>
+                            <div>
+                                <h4>会場を巡る</h4>
+                                <p>各スポットを探して、気になるブースを楽しもう！</p>
+                            </div>
+                        </div>
+
+                        <div class="stamp-howto-item">
+                            <span class="stamp-howto-number">03</span>
+                            <div>
+                                <h4>QRコードを読み取る</h4>
+                                <p>スポットのQRコードを読み取るとスタンプを獲得できます。</p>
+                            </div>
+                        </div>
+
+                        <div class="stamp-howto-item">
+                            <span class="stamp-howto-number">04</span>
+                            <div>
+                                <h4>特典をゲット</h4>
+                                <p>一定数のスタンプを獲得すると、特典をゲットできます！</p>
+                                <p>学生は抽選会での当選確率がアップ！</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stamp-notice">
+                        <h3>ご利用について</h3>
+                        <ul>
+                            <li>QRコードの読み取りには、カメラの使用を許可してください。</li>
+                            <li>データの消失を防ぐため、履歴の削除等はしないでください。</li>
+                            <li>同じスポットのスタンプを複数回獲得することはできません。</li>
+                        </ul>
+                    </div>
+            </section>
+
+            <div class="stamp-survey" id="stamp-survey" aria-label="任意アンケート">
+                <h3>開始前アンケート（任意）</h3>
+                <p class="stamp-note">
+                    20秒ほどで回答できます。<br>
+                    未回答のまま開始することもできます。
+                </p>
+
+                <div class="stamp-survey-grid">
+
+                    <label>
+                        年代
+                        <select id="survey-age-group">
+                            <option value="">回答しない</option>
+                            <option value="under-13">小学生以下</option>
+                            <option value="13-15">中学生</option>
+                            <option value="16-18">高校生</option>
+                            <option value="student">高専生・大学生</option>
+                            <option value="20s">20代</option>
+                            <option value="30s">30代</option>
+                            <option value="40s">40代</option>
+                            <option value="50-plus">50代以上</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        高専祭を知ったきっかけ
+                        <select id="survey-discovery">
+                            <option value="">回答しない</option>
+                            <option value="friend">友人・知人から</option>
+                            <option value="school">学校・学校関係者から</option>
+                            <option value="poster">ポスター・チラシ</option>
+                            <option value="sns">SNS</option>
+                            <option value="website">公式Webサイト</option>
+                            <option value="previous">以前来たことがある</option>
+                            <option value="other">その他</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        お住まいの地域
+                        <select id="survey-area">
+                            <option value="">回答しない</option>
+                            <option value="matsue">松江市</option>
+                            <option value="izumo">出雲市</option>
+                            <option value="hamada">浜田市</option>
+                            <option value="oda">大田市</option>
+                            <option value="masuda">安来市</option>
+                            <option value="other-shimane">その他の島根県内</option>
+                            <option value="outside-shimane">島根県外</option>
+                        </select>
+                    </label>
+
+                </div>
+            </div>
+
+            <button id="begin-rally" class="stamp-btn" type="button">スタンプラリーを始める</button>
+        </section>
+
+        <section class="stamp-rally container-section hidden" id="stamp-rally">
+            <h2>スタンプを集める</h2>
+            <p class="stamp-intro">会場に設置されたQRコードを読み取ると、スタンプが獲得できます。</p>
+            <p class="stamp-intro">各場所のカードを見ながら、QRコードを読み取ってスタンプを集めてください。</p>
+
+            <div class="stamp-controls">
+                <button id="start-scan" class="stamp-btn" type="button">カメラでQRを読み取る</button>
+            </div>
+
+            <div class="stamp-grid" id="stamp-grid"></div>
+
+            <script>
+                window.stampRallyAdditionalLocations = [
+                    {
+                        id: 'club-1',
+                        name: 'ロボットコンテスト',
+                        note: '部活動・コンテストの展示や活動をお楽しみください。',
+                        linkText: '展示紹介へ',
+                        href: './exhibition.html',
+                        image: './images/companies/robo.jpg'
+                    },
+                    {
+                        id: 'club-2',
+                        name: 'レスキューコンテスト',
+                        note: '部活動・コンテストの展示や活動をお楽しみください。',
+                        linkText: '展示紹介へ',
+                        href: './exhibition.html',
+                        image: './images/companies/res.jpg'
+                    },
+                    {
+                        id: 'club-3',
+                        name: 'エコラン',
+                        note: '部活動・コンテストの展示や活動をお楽しみください。',
+                        linkText: '展示紹介へ',
+                        href: './exhibition.html',
+                        image: './images/companies/eco.png'
+                    },
+                    {
+                        id: 'club-4',
+                        name: 'プログラミングコンテスト',
+                        note: '部活動・コンテストの展示や活動をお楽しみください。',
+                        linkText: '展示紹介へ',
+                        href: './exhibition.html',
+                        image: './images/companies/pro.png'
+                    },
+                    {
+                        id: 'club-5',
+                        name: 'デザインコンペティション',
+                        note: '部活動・コンテストの展示や活動をお楽しみください。',
+                        linkText: '展示紹介へ',
+                        href: './exhibition.html',
+                        image: './images/companies/deza.png'
+                    },
+                    {
+                        id: 'department-1',
+                        name: '機械工学科(M科)',
+                        note: '学科展示をお楽しみください',
+                        image: './images/companies/m.jpg'
+                    },
+                    {
+                        id: 'department-2',
+                        name: '電気情報工学科(E科)',
+                        note: '学科展示をお楽しみください',
+                        image: './images/companies/e.jpg'
+                    },
+                    {
+                        id: 'department-3',
+                        name: '電子制御工学科(D科)',
+                        note: '学科展示をお楽しみください',
+                        image: './images/companies/d.jpg'
+                    },
+                    {
+                        id: 'department-4',
+                        name: '情報学科(J科)',
+                        note: '学科展示をお楽しみください',
+                        image: './images/companies/j.jpg'
+                    },
+                    {
+                        id: 'department-5',
+                        name: '環境都市工学科(C科)',
+                        note: '学科展示をお楽しみください',
+                        image: './images/companies/c.jpg'
+                    }
+                ];
+            </script>
+
+            <div class="stamp-sheet-panel" aria-label="スタンプラリーシート">
+                <div class="stamp-sheet-head">
+                    <div>
+                        <p class="stamp-label">スタンプラリーシート</p>
+                        <h3 style="color: #3f7bfd;">達成度</h3>
+                    </div>
+                    <p class="stamp-sheet-progress">
+                        <span id="stamp-sheet-count">0</span>/<span id="stamp-sheet-total">0</span>
+                        <span id="stamp-sheet-rate">0%</span>
+                    </p>
+                </div>
+                <div class="stamp-sheet-bar" aria-hidden="true">
+                    <div id="stamp-sheet-fill" class="stamp-sheet-bar-fill"></div>
+                </div>
+                <div class="stamp-reward-status" aria-live="polite">
+                    <span class="stamp-reward-label">粗品の受け取り</span>
+                    <strong id="stamp-reward-state">未受け取り</strong>
+                </div>
+                <div id="stamp-sheet" class="stamp-sheet-grid"></div>
+            </div>
+
+            <!--
+        以前の会場スポット版スタンプカードは、将来の再利用に備えて残しています。
+        <div class="stamp-grid" id="stamp-grid-legacy">
+            <article class="stamp-card" data-stamp-id="entrance">...</article>
+            <article class="stamp-card" data-stamp-id="museum">...</article>
+            <article class="stamp-card" data-stamp-id="stage">...</article>
+            <article class="stamp-card" data-stamp-id="shop">...</article>
+        </div>
+        -->
+
+
+
+            <div id="scan-modal" class="stamp-scan-modal hidden" aria-hidden="true">
+                <div class="stamp-scan-modal-backdrop" data-scan-close="backdrop"></div>
+                <section class="stamp-scan-modal-panel" role="dialog" aria-modal="true"
+                    aria-labelledby="scan-modal-title">
+                    <div class="stamp-scan-modal-head">
+                        <div>
+                            <p class="stamp-label">SCAN MODE</p>
+                            <h3 id="scan-modal-title">QRコードを読み取る</h3>
+                        </div>
+                        <button id="scan-modal-close" class="stamp-btn secondary" type="button">閉じる</button>
+                    </div>
+
+                    <div class="stamp-scan-stage">
+                        <div class="stamp-scan-reader-wrap">
+                            <div id="reader" class="reader-box stamp-scan-reader" aria-live="polite"></div>
+                            <div class="stamp-scan-frame" aria-hidden="true">
+                                <span class="stamp-scan-line"></span>
+                            </div>
+                            <div id="scan-success" class="stamp-scan-success" aria-hidden="true">✓</div>
+                        </div>
+                    </div>
+
+                    <p id="scan-status" class="scan-status">カメラを起動すると、読み取ったQRコードの場所を記録できます。</p>
+
+                    <div class="stamp-scan-actions">
+                        <button id="scan-modal-retry" class="stamp-btn secondary hidden" type="button">再試行</button>
+                    </div>
+                </section>
+            </div>
+            <!-- <div class="stamp-map-panel">
+            <h3>会場マップ</h3>
+            <p class="stamp-note">現在の巡回ルートと各スポットの位置を確認できます。</p>
+            <iframe id="stamp-map-frame" src="/map.html" title="会場マップ" class="stamp-map-frame"></iframe>
+        </div> -->
+            <div id="stamp-summary" class="stamp-summary">スタンプラリーの履歴はこの端末に保存されます。履歴の削除を行うとデータが消失する可能性があります。</div>
+        </section>
+
+    </main>
+
+    <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

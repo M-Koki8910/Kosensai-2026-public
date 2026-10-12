@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭にご協賛いただいている企業・団体をご紹介します。">
+    <meta property="og:title" content="ご協賛企業紹介 | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭にご協賛いただいている企業・団体をご紹介します。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/company.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <script src="./scripts/script.js" defer></script>
+    <title>ご協賛企業紹介</title>
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+   <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main>
+        <section class="container-section company-section">
+            <h2>企業紹介</h2>
+
+            <p class="company-intro">
+                高専祭にご協力いただいている企業をご紹介します。
+            </p>
+
+            <section class="company-subsection">
+                <h3>ご出展企業様</h3>
+                <div id="exhibition-company-list" class="company-grid"></div>
+            </section>
+
+            <section class="company-subsection">
+                <h3>ご協賛企業様</h3>
+                <div id="sponsor-company-list" class="company-grid"></div>
+            </section>
+        </section>
+
+
+        <!-- 企業紹介モーダル -->
+        <div id="company-modal" class="company-modal">
+            <div class="company-modal-overlay"></div>
+
+            <div class="company-modal-content">
+                <button type="button" class="company-modal-close" aria-label="閉じる">
+                    ×
+                </button>
+
+                <div id="company-modal-body"></div>
+            </div>
+        </div>
+    </main>
+    <script>
+
+        const exhibitionCompanyList =
+            document.getElementById('exhibition-company-list');
+        const sponsorCompanyList =
+            document.getElementById('sponsor-company-list');
+        const companyModal = document.getElementById('company-modal');
+        const companyModalBody =
+            document.getElementById('company-modal-body');
+        const companyModalClose =
+            document.querySelector('.company-modal-close');
+        const companyModalOverlay =
+            document.querySelector('.company-modal-overlay');
+
+
+        async function loadCompanies() {
+            try {
+                const response = await fetch('./scripts/companies.json');
+
+                if (!response.ok) {
+                    throw new Error('企業データの取得に失敗しました');
+                }
+
+                const companies = await response.json();
+
+                companies.forEach(company => {
+                    const list = company.exhibition === true
+                        ? exhibitionCompanyList
+                        : sponsorCompanyList;
+
+                    createCompanyCard(company, list);
+                });
+
+                // URLから企業IDを取得
+                const params =
+                    new URLSearchParams(window.location.search);
+
+                const companyId =
+                    params.get("id");
+
+
+                // IDが指定されている場合
+                if (companyId) {
+
+                    const company =
+                        companies.find(
+                            company => company.id === companyId
+                        );
+
+                    if (company) {
+                        openCompanyModal(company);
+                    }
+                }
+
+
+            } catch (error) {
+                console.error(error);
+
+                exhibitionCompanyList.innerHTML =
+                    '<p>企業情報を読み込めませんでした。</p>';
+                sponsorCompanyList.innerHTML =
+                    '<p>企業情報を読み込めませんでした。</p>';
+            }
+        }
+
+
+
+
+        function createCompanyCard(company, list) {
+            const card = document.createElement('article');
+
+            card.className = 'company-card';
+
+            card.innerHTML = `
+            <div class="company-card-image">
+                <img
+                    src="${company.image}"
+                    alt="${company.name} ロゴ">
+            </div>
+
+            <div class="company-card-body">
+
+                <h3>${formatCompanyName(company.name)}</h3>
+
+                
+
+                <button
+                    type="button"
+                    class="company-detail-button">
+                    詳しく見る
+                </button>
+
+            </div>
+        `;
+
+            card.querySelector('.company-detail-button')
+                .addEventListener('click', () => {
+                    openCompanyModal(company);
+                });
+
+            list.appendChild(card);
+        }
+
+
+        function formatCompanyName(name) {
+            const normalizedName = name.replace(/\s+/g, '');
+            const prefix = normalizedName.startsWith('株式会社')
+                ? '株式会社'
+                : '';
+            const suffix = normalizedName.endsWith('株式会社')
+                ? '株式会社'
+                : '';
+
+            const middleAffixIndex = normalizedName.indexOf('株式会社', prefix.length);
+            if (middleAffixIndex !== -1 && !suffix) {
+                return `
+                    <span class="company-name-body">${normalizedName.slice(0, middleAffixIndex)}</span>
+                    <span class="company-name-affix">株式会社</span>
+                    <span class="company-name-body">${normalizedName.slice(middleAffixIndex + '株式会社'.length)}</span>
+                `;
+            }
+
+            const companyBody = normalizedName
+                .slice(prefix.length, normalizedName.length - suffix.length);
+
+            if (companyBody.length < 14) {
+                return `
+                    ${prefix ? `<span class="company-name-affix">${prefix}</span>` : ''}
+                    <span class="company-name-body">${companyBody}</span>
+                    ${suffix ? `<span class="company-name-affix">${suffix}</span>` : ''}
+                `;
+            }
+
+            const splitAt = Math.ceil(companyBody.length / 2);
+            return `
+                ${prefix ? `<span class="company-name-affix">${prefix}</span>` : ''}
+                <span class="company-name-body">${companyBody.slice(0, splitAt)}</span>
+                <span class="company-name-body">${companyBody.slice(splitAt)}</span>
+                ${suffix ? `<span class="company-name-affix">${suffix}</span>` : ''}
+            `;
+        }
+
+
+        function openCompanyModal(company) {
+            const descriptionSection = company.description === 'none'
+                ? ''
+                : `
+                <section class="company-detail-section">
+                    <h3>企業紹介</h3>
+                    <p>${company.description}</p>
+                </section>
+                `;
+
+            companyModalBody.innerHTML = `
+            <div class="company-detail">
+
+                <div class="company-detail-header">
+                    <img
+                        src="${company.image}"
+                        alt="${company.name} ロゴ">
+
+                    <h2>${formatCompanyName(company.name)}</h2>
+
+                    
+                </div>
+
+
+                ${descriptionSection}
+
+                
+                <section class="company-detail-section company-info">
+                    <h3>企業情報</h3>
+
+                    <dl>
+                        <dt>所在地</dt>
+                        <dd>${company.address}</dd>
+                    </dl>
+                </section>
+
+
+                <div class="company-detail-link">
+                    <a
+                        href="${company.website}"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        公式サイトを見る
+                    </a>
+                </div>
+
+            </div>
+        `;
+
+            companyModal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+
+        function closeCompanyModal() {
+            companyModal.classList.remove('active');
+            document.body.classList.remove('modal-open');
+        }
+
+
+        companyModalClose.addEventListener(
+            'click',
+            closeCompanyModal
+        );
+
+        companyModalOverlay.addEventListener(
+            'click',
+            closeCompanyModal
+        );
+
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeCompanyModal();
+            }
+        });
+
+
+        loadCompanies();
+    </script>
+
+    <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭に関する最新のお知らせを掲載しています。">
+    <meta property="og:title" content="お知らせ | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭に関する最新のお知らせを掲載しています。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/announcements.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/tweet.js"></script>
+
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <title>お知らせ - 高専祭</title>
+
+    <style>
+        /* =========================
+   お知らせ
+========================= */
+
+        .announcement-container {
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .postcard {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+        }
+
+        .postcard h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .postcard label {
+            display: block;
+            margin: 15px 0 6px;
+            font-weight: bold;
+        }
+
+        .postcard input,
+        .postcard textarea,
+        .postcard select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .postcard textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .postcard select {
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #0078d7;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn:hover {
+            background: #005fa3;
+        }
+
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+        }
+
+        .char-counter {
+            text-align: right;
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+   お知らせ一覧
+========================= */
+
+        .announcement-item {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 6px solid #3b82f6;
+            background: #fafafa;
+            border-radius: 8px;
+        }
+
+        .announcement-item h4 {
+            margin: 0 0 8px;
+        }
+
+        .announcement-item p {
+            margin: 0;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .announcement-item small {
+            display: block;
+            margin-top: 10px;
+            color: #777;
+        }
+
+        /* 重要度 */
+
+        .announcement-item.normal {
+            border-left-color: #3b82f6;
+        }
+
+        .announcement-item.important {
+            border-left-color: #f59e0b;
+            background: #fff8e8;
+        }
+
+        .announcement-item.urgent {
+            border-left-color: #dc2626;
+            background: #fff0f0;
+        }
+
+        /* =========================
+   管理画面
+========================= */
+
+        .manage-item {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: white;
+        }
+
+        .manage-item h4 {
+            margin: 0 0 10px;
+        }
+
+        .manage-meta {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .manage-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn-edit {
+            background: #f59e0b;
+        }
+
+        .btn-edit:hover {
+            background: #d97706;
+        }
+
+        .btn-delete {
+            background: #dc2626;
+        }
+
+        .btn-delete:hover {
+            background: #b91c1c;
+        }
+
+        /* =========================
+   メッセージ
+========================= */
+
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================
+   スマホ対応
+========================= */
+
+        @media (max-width: 600px) {
+
+            .announcement-container {
+                padding: 15px;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .manage-actions {
+                flex-direction: column;
+            }
+
+            .manage-actions .btn {
+                width: 100%;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+
+        <div class="topbar">
+            <a href="./index.html" class="home-link">
+                <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+            </a>
+            <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+        </div>
+
+       <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+        <main>
+
+            <div class="announcement-container">
+
+                <h2>お知らせ</h2>
+
+                <section class="postcard">
+
+                    <div class="section-header">
+                        <h2>現在のお知らせ</h2>
+
+                        <!-- 認証チェック機能付きボタン -->
+                        <button id="postAnnouncementBtn" class="btn">
+                            お知らせを投稿
+                        </button>
+                    </div>
+
+                    <div id="announcementsContainer">
+                        読み込み中...
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+                <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+        <script src="./scripts/tweet.js"></script>
+        <script src="./scripts/script.js"></script>
+
+        <script>
+            /**
+             * アナウンス投稿ボタンのクリックハンドラ
+             * - 認証状態を確認
+             * - 権限をチェック
+             * - 必要に応じてログインページへリダイレクト
+             */
+            document.addEventListener('DOMContentLoaded', function () {
+                const postBtn = document.getElementById('postAnnouncementBtn');
+                if (postBtn) {
+                    postBtn.addEventListener('click', handlePostButtonClick);
+                }
+            });
+
+            async function handlePostButtonClick(e) {
+                e.preventDefault();
+
+                try {
+                    const response = await fetch('/api/auth/check-announcement-access');
+                    const data = await response.json();
+
+                    if (data.ok) {
+                        // 認証済み＆権限あり → 投稿ページへ遷移
+                        console.log('✓ アナウンス投稿権限確認:', data.username, data.role);
+                        window.location.href = './announcements-post.html';
+                    } else if (response.status === 401) {
+                        // 未認証 → ログインページへリダイレクト
+                        console.log('✗ 認証なし - ログイン画面へ遷移');
+                        window.location.href =
+                            "./announcement-login.html?redirect=" +
+                            encodeURIComponent("./announcements-post.html");
+                    } else if (response.status === 403) {
+                        // 権限なし
+                        console.log('✗ 権限なし:', data.error);
+                        alert('申し訳ありません。お知らせ投稿権限がありません。\n\n管理者にお問い合わせください。');
+                    }
+                } catch (error) {
+                    console.error('アクセス確認エラー:', error);
+                    alert('アクセス確認中にエラーが発生しました。');
+                }
+            }
+        </script>
+    </body>
+
+</html>

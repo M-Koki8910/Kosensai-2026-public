@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭の開催概要やテーマ、実行委員会からの情報を紹介します。">
+    <meta property="og:title" content="高専祭について | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭の開催概要やテーマ、実行委員会からの情報を紹介します。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/about.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <title>高専祭について</title>
+    <style>
+        .about {
+            width: 100%;
+            color: #1f2937;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef4f8 100%);
+            line-height: 1.8;
+        }
+
+        .about *,
+        .about *::before,
+        .about *::after {
+            box-sizing: border-box;
+        }
+
+        .about h1,
+        .about h2,
+        .about h3,
+        .about p,
+        .about ul {
+            margin-top: 0;
+        }
+
+        .about p,
+        .about ul {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .about-hero {
+            position: relative;
+            display: grid;
+            min-height: 430px;
+            place-items: center;
+            padding: 72px 20px 64px;
+            background-image: linear-gradient(rgba(7, 25, 42, 0.5), rgba(7, 25, 42, 0.58)), url('./images/kosensai-ilust.png');
+            background-position: center 48%;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .about-hero-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-eyebrow {
+            margin-bottom: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.18em;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .about-hero h1 {
+            margin-bottom: 16px;
+            font-size: clamp(2.1rem, 4vw, 3.2rem);
+            line-height: 1.3;
+            font-weight: 800;
+        }
+
+        .about-lead {
+            max-width: 760px;
+            margin: 0 auto;
+            font-size: 1.08rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .about-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 72px 20px;
+        }
+
+        .about-page+.about-page {
+            padding-top: 0;
+        }
+
+        .about-heading {
+            margin-bottom: 24px;
+        }
+
+        .about-heading h2 {
+            margin: 0;
+            font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+            line-height: 1.4;
+            color: #0f172a;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            padding: 28px 26px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+        }
+
+        .about-card p {
+            margin-bottom: 1.15rem;
+            color: #475569;
+            font-size: 1.02rem;
+            line-height: 2;
+            letter-spacing: 0.02em;
+            text-wrap: pretty;
+        }
+
+        .about-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-card.about-highlight {
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .about-card strong {
+            display: block;
+            margin-bottom: 0.7rem;
+            padding: 0.55rem 0.75rem;
+            border-left: 4px solid #f28c28;
+            border-radius: 0 6px 6px 0;
+            background: rgba(255, 247, 237, 0.92);
+            color: #1e3a8a;
+            font-size: 1.08rem;
+            line-height: 1.6;
+        }
+
+        .about-card .shop-info-wrapper {
+            display: grid;
+            gap: 18px;
+        }
+
+        .about-card .shop-info-wrapper p {
+            margin-bottom: 0;
+        }
+
+        .shop-info-wrapper p:first-child {
+            padding-bottom: 1.1rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .shop-info-wrapper p:not(:first-child) {
+            color: #526275;
+        }
+
+        .shop-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .shop-gallery figure {
+            margin: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            background: #e2e8f0;
+        }
+
+        .shop-gallery img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .shop-gallery figure:hover img {
+            transform: scale(1.04);
+        }
+
+        .shop-gallery figcaption {
+            padding: 9px 10px 10px;
+            color: #334155;
+            background: #fff;
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        @media (max-width: 700px) {
+            .about-hero {
+                min-height: 360px;
+                padding: 56px 16px 48px;
+                background-position: center center;
+            }
+
+            .about-page {
+                padding: 58px 16px;
+            }
+
+            .about-card {
+                padding: 20px 18px;
+            }
+
+            .about-card p {
+                font-size: 0.98rem;
+                line-height: 1.9;
+            }
+
+            .about-card strong {
+                font-size: 1rem;
+            }
+
+            .shop-gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main class="about">
+        <section class="about-hero">
+            <div class="about-hero-inner">
+                <p class="about-eyebrow">ABOUT KOSENSAI</p>
+                <h1>高専祭について</h1>
+                <p class="about-lead">
+                    松江高専の魅力と本校の文化祭の意義を、より見やすく、わかりやすくお伝えするためのページです。
+                </p>
+            </div>
+        </section>
+
+        <section class="about-page">
+            <div class="about-heading">
+                <h2>松江高専とは</h2>
+            </div>
+            <div class="about-card about-highlight">
+                <p>
+                    松江工業高等専門学校（松江高専）は、島根県松江市に位置する国立高等専門学校です。
+                </p>
+                <p>
+                    「（ま）学んで（つ）創れる（え）エンジニア」を教育目標に掲げ、創造性と実践的技術力を兼ね備えた国際的エンジニアの育成に力を入れています。
+                </p>
+                <p>
+                    高専ロボットコンテストや高専プログラミングコンテスト、高専デザインコンペティションをはじめ、GCON、レスキューロボットコンテストなどでも多くの成果を出しています。
+                    クラブ活動も盛んで、スポーツや文化の分野で全国大会などに挑戦する学生が活躍しています。
+                </p>
+            </div>
+        </section>
+
+        <section class="about-page">
+            <div class="about-heading">
+                <h2>高専祭とは</h2>
+            </div>
+            <div class="about-card">
+                <p>
+                    本校の文化祭は、学生主体で企画・運営されるイベントです。
+                    模擬店やステージ企画、展示など、多彩な催しが行われます。
+                </p>
+                <p>
+                    昨年度からは模擬店だけでなく、校舎内の教室を使った展示型イベントも取り入れました。
+                    脱出ゲームやボードゲームカフェなど、ご来場のみなさまが参加・体験できる企画を充実させています。
+                </p>
+            </div>
+        </section>
+
+        <section class="about-page">
+            <div class="about-heading">
+                <h2>おすすめ模擬店情報</h2>
+            </div>
+            <div class="about-card about-highlight">
+                <div class="shop-gallery" aria-label="模擬店のイメージ">
+                    <figure>
+                        <img src="./images/shop.jpg" alt="炭火で焼かれる焼き鳥" loading="lazy">
+                        <figcaption>香ばしい焼き鳥</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="./images/shop_C4.png" alt="カップに盛られたスイーツ" loading="lazy">
+                        <figcaption>ひんやりスイーツ</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="./images/shop_J3_メイド.jpeg" alt="メイド喫茶の企画イラスト" loading="lazy">
+                        <figcaption>メイド喫茶</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="./images/shop_J3_迷路.jpeg" alt="迷路企画のイラスト" loading="lazy">
+                        <figcaption>参加型アトラクション</figcaption>
+                    </figure>
+                </div>
+                <div class="shop-info-wrapper">
+                    <p>
+                        ガッツリ飯から絶品スイーツ、体験型アトラクションまで盛りだくさん！
+                        目的や気分に合わせて、ぜひお気に入りの模擬店を見つけてみてください。
+                    </p>
+                    <p>
+                        <strong>1. お腹が大満足！スタミナグルメ</strong><br>
+                        ・王道祭りグルメ<br>
+                        「焼きそば（ソース・塩）」「たこ焼き」「フランクフルト」「焼き鳥」「ホットドッグ」「うどん」<br><br>
+                        ・ガッツリお肉＆ご飯<br>
+                        「肉巻きおにぎり」「はしまき」「ブラジル肉パン」「タコス」「カレー」<br><br>
+                        ・スナック＆サイド<br>
+                        「ピザ」「チーズボール」「ナゲット」「ロングポテト」
+                    </p>
+                    <p>
+                        <strong>2. ひんやりアツアツスイーツ</strong><br>
+                        ・ひんやりスイーツ<br>
+                        「メロンパンアイス」「削りイチゴ」「ディッピンドッツ」「ソーダフロート」「スムージー」「シリアルパンケーキ」<br><br>
+                        ・和風スイーツ<br>
+                        「クレープ」「ホットサンド」「ワッフル」「たい焼き」「ベビーカステラ」「チョコバナナ」「わたがし」「お餅パフェ」「白玉団子（きなこ・チョコ・みたらし）」「プリン」<br><br>
+                        ・ドリンク各種
+                    </p>
+                    <p>
+                        <strong>3. 遊んで・作って・思い出づくり！体験型コーナー</strong><br>
+                        ・体験・ゲーム<br>
+                        頭脳をフル回転させて脱出を目指す「脱出ゲーム」、じっくり遊べる「ボードゲーム・カードゲーム」<br><br>
+                        ・思い出＆ワークショップ<br>
+                        素敵な小物が作れる「つまみ細工体験」、記念写真が撮れる「フォトスポット・コスプレ」<br><br>
+                        ・コンセプトルーム<br>
+                        美味しいメニューを楽しめる「メイド喫茶」
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

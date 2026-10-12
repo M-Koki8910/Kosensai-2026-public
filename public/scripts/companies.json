@@ -1,0 +1,578 @@
+[
+  {
+    "exhibition": true,
+    "id": "company-1",
+    "name": "株式会社アイ・コミュニケーション",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "",
+      ""
+    ],
+    "description": "ITって、難しくなるほどかっこいい気がしませんか？私たちはその逆だと思っています。誰もが使えること、わかりやすいことこそがITの真髄です。「やさしいIT」で、地域の人と社会をつなぐお手伝いをする会社です。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市北陵町46-4",
+    "website": "https://www.i-communication.co.jp/",
+    "image": "../images/companies/1.png"
+  },
+  {
+    "exhibition": true,
+    "id": "company-2",
+    "name": "奥村組土木興業株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "奥村組土木興業は、社会基盤整備の会社です。 100 年にわたる経験とノウハウを活かし、人々の暮らしを豊かにする「まちづくり」に貢献しています。 意欲ある若者を歓迎し、若い力の挑戦と成長を応援しています。",
+    "festival": "festival",
+    "message": "message",
+    "address": "広島市中区鉄砲町7番18号",
+    "website": "https://www.okumuradbk.co.jp/",
+    "image": "../images/companies/2.jpg"
+  },
+  {
+    "exhibition": true,
+    "id": "company-3",
+    "name": "島根電工株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "島根電工グループは地域のインフラを支え、あたりまえの毎日をつくる総合設備企業です。社員とその家族を大切にする経営を実践し、手厚い研修やメンター制度で若手が安心して技術を学べる環境を整えています。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市東本町5丁目63番地",
+    "website": "https://www.sdgr.co.jp/index.html",
+    "image": "../images/companies/3.jpg"
+  },
+  {
+    "exhibition": true,
+    "id": "company-4",
+    "name": "西尾レントオール株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市東出雲町意宇南4-1-1",
+    "website": "https://www.nishio-rent.co.jp/",
+    "image": "../images/companies/4.png"
+  },
+  {
+    "exhibition": true,
+    "id": "company-5",
+    "name": "株式会社　日進ProSOL(ヒカワ工場)",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県出雲市斐川町荘原3168番地",
+    "website": "https://prosol.nissin-mfg.co.jp/",
+    "image": "../images/companies/5.png"
+  },
+  {
+    "exhibition": true,
+    "id": "company-6",
+    "name": "松江山本金属株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "松江市北稜町で、3m級の大物・高精度な金属加工を行っています。製造系部門の社員の約半数が松江高専OBです。企業展示ブースでは切削によるものづくり体験を開催します。ぜひお越しください！",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市北陵町30番地",
+    "website": "https://www.matsue-yamakin.co.jp/",
+    "image": "../images/companies/6.png"
+  },
+  {
+    "exhibition": true,
+    "id": "company-7",
+    "name": "株式会社守谷刃物研究所",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "当社は刃物の研究機関ではなく、自動車部品から貨幣用パンチなど皆さんの生活に関わる部品を造っている製造業です。第２体育館の当社ブースでは、ものづくりの楽しさを体験できる企画を用意してお待ちしています！",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県安来市恵乃島町113-1",
+    "website": "https://www.moriyacl.co.jp/",
+    "image": "../images/companies/7.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-8",
+    "name": "株式会社　出雲村田製作所",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県出雲市斐川町上直江2308番地",
+    "website": "https://corporate.murata.com/ja-jp/group/izumomurata",
+    "image": "../images/companies/8.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-9",
+    "name": "大畑建設株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県益田市大谷町36番地3",
+    "website": "https://ohata.construction/",
+    "image": "../images/companies/9.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-10",
+    "name": "カナツ技建工業株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市春日町636番地",
+    "website": "https://www.kanatsu.co.jp/",
+    "image": "../images/companies/10-2.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-11",
+    "name": "株式会社　三晃空調",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "松江市東本町四丁目147番地",
+    "website": "https://www.sanko-air.co.jp/recruit/",
+    "image": "../images/companies/11.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-12",
+    "name": "株式会社シーエム・エンジニアリング",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "シーエム・エンジニアリングは、道路や橋、河川など、私たちの暮らしに必要な社会インフラをつくる国の仕事を、工事を始める前から工事中、完成した後の管理まで見えないところで幅広く支える会社です。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県出雲市塩冶有原町五丁目9番地1",
+    "website": "https://cmeng.co.jp/recruit/",
+    "image": "../images/companies/12.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-13",
+    "name": "島根自動機株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市北陵町5-1",
+    "website": "https://www.shimane-jidoki.com/",
+    "image": "../images/companies/13.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-14",
+    "name": "株式会社昭和測量設計事務所",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県益田市高津四丁目14番6号",
+    "website": "http://showa00.co.jp/",
+    "image": "../images/companies/14.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-15",
+    "name": "新和設備工業株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市平成町182番地22",
+    "website": "https://shinwasetsubi.co.jp/",
+    "image": "../images/companies/15.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-16",
+    "name": "株式会社ジェイ・エム・エス出雲工場",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県出雲市下古志町127-1",
+    "website": "https://www.jms.cc/index.html",
+    "image": "../images/companies/16.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-17",
+    "name": "ゼノー・テック出雲株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県出雲市多伎町口田儀1269-4",
+    "website": "https://izeno.co.jp/",
+    "image": "../images/companies/17.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-18",
+    "name": "株式会社　太陽電機製作所",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "高専で学んだ知識がそのまま仕事に！私たちは配電盤をオーダーメイドで製作しています。電気・機械・CADの知識を活かして、自分たちの設計を形にし、ものづくりの達成感を味わえます。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市矢田町250番地100",
+    "website": "https://www.taiyo-denki.co.jp/",
+    "image": "../images/companies/18.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-19",
+    "name": "株式会社テクノプロジェクト",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "テクノプロジェクトは、自治体・医療・教育・企業の課題解決に取り組むIT企業です。地域や社会の課題をIT技術を用いて解決し、人々の暮らしを支えています。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市学園南2丁目10-14 タイムプラザビル",
+    "website": "https://www.tpj.co.jp/",
+    "image": "../images/companies/19.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-20",
+    "name": "株式会社中筋組",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "中筋組は、土木・港湾・建築の工事管理を通じて地域の暮らしと未来を支える総合建設会社です。「人生の舞台をつくっています」を合言葉に、若い力と新技術を生かし、安心して暮らせる地域づくりに挑戦しています。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県出雲市姫原町262番地",
+    "website": "https://www.instagram.com/nakasuji_izumo",
+    "image": "../images/companies/20.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-21",
+    "name": "ピーエス・コンストラクション株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "ピーエス・コンストラクション株式会社は、プレストレスト・コンクリート技術を強みとし、橋梁・建築・インフラ整備を通じて社会基盤を支える総合建設会社です。高い技術力と挑戦する姿勢で、安全で豊かな未来づくりに貢献しています。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市嫁島町10-7　ウィードビル2F",
+    "website": "https://www.psc.co.jp/",
+    "image": "../images/companies/21.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-22",
+    "name": "ヒラタ精機株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県出雲市西郷町字小池718番地",
+    "website": "https://www.hiratask.co.jp/",
+    "image": "../images/companies/22.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-23",
+    "name": "復建調査設計株式会社　松江支社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市西嫁島一丁目2-33",
+    "website": "https://www.fukken.co.jp/",
+    "image": "../images/companies/23.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-24",
+    "name": "株式会社ペンタスネット",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市北陵町43番地",
+    "website": "https://www.pentas-net.co.jp/",
+    "image": "../images/companies/24.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-25",
+    "name": "松江土建株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市学園南二丁目3番5号",
+    "website": "https://www.matsue-doken.co.jp/",
+    "image": "../images/companies/25.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-26",
+    "name": "美保テクノス株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "鳥取県米子市昭和町25",
+    "website": "https://www.instagram.com/miho_no_eye",
+    "image": "../images/companies/26.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-27",
+    "name": "ヤンマーキャステクノ株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市八幡町960番地",
+    "website": "https://www.yanmar.com/jp/about/company/ycat/about/matsue.html",
+    "image": "../images/companies/27.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-28",
+    "name": "株式会社オンチョウ",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市矢田町250-105",
+    "website": "https://www.oncho.co.jp/",
+    "image": "../images/companies/28.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-29",
+    "name": "株式会社山陰合同銀行",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県松江市魚町10番地",
+    "website": "https://www.gogin.co.jp/index.html",
+    "image": "../images/companies/29.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-30",
+    "name": "セコム山陰株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "島根県松江市に本社を構え、セコムの強靭なセキュリティサービスを島根県内のご契約先に提供するとともに、1995年に開始した情報系事業が医療等の地域社会のITインフラを支える重要な役割を果たしています。",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県 松江市 北陵町 34",
+    "website": "https://www.secom-sanin.co.jp/",
+    "image": "../images/companies/30.jpg"
+  },
+  {
+    "exhibition": false,
+    "id": "company-31",
+    "name": "秦精工株式会社",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "none",
+    "festival": "festival",
+    "message": "message",
+    "address": "島根県安来市黒井田町691番地",
+    "website": "https://hadaseikou.co.jp/",
+    "image": "../images/companies/31.png"
+  },
+  {
+    "exhibition": false,
+    "id": "company-32",
+    "name": "高専テクノゼミ",
+    "note": "企業Aのブース前のQRコードを読み取る",
+    "linkText": "企業紹介へ",
+    "href": "../company.html",
+    "industry": [
+      "IT",
+      "システム開発"
+    ],
+    "description": "テクノゼミは高専卒東大発スタートアップによる高専生の学び・キャリア支援事業。高専卒の大学生・社会人200名以上が、定期試験や編入・就活、高専機構後援のAIプログラムまで一貫してサポートしています。",
+    "festival": "festival",
+    "message": "message",
+    "address": "東京都中央区日本橋室町4丁目3-11 ",
+    "website": "https://techno-semi.com/",
+    "image": "../images/companies/32.png"
+  }
+]

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭へ来場される方に向けて、アクセスや会場での案内を掲載しています。">
+    <meta property="og:title" content="ご来場の方へ | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭へ来場される方に向けて、アクセスや会場での案内を掲載しています。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/tovisitors.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+    <style>
+        /* =========================================
+   ご来場の方へ
+========================================= */
+
+        main {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        main>section {
+            width: min(1100px, calc(100% - 40px));
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+
+        /* ページタイトル */
+
+        .page-title {
+            padding: 70px 20px 55px;
+            text-align: center;
+        }
+
+        .page-eyebrow {
+            margin: 0 0 8px;
+            color: #5b82ad;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            color: #1f2937;
+            font-size: clamp(2rem, 5vw, 3rem);
+            letter-spacing: 0.06em;
+        }
+
+        .page-title>p:last-child {
+            margin: 18px auto 0;
+            color: #667085;
+            font-size: 0.92rem;
+            line-height: 1.9;
+        }
+
+
+        /* セクション */
+
+        .access,
+        .transport,
+        .parking,
+        .notice {
+            padding: 0 20px;
+            margin-bottom: 80px;
+        }
+
+        .access h2,
+        .transport h2,
+        .parking h2,
+        .notice h2 {
+            margin: 0 0 24px;
+            padding-left: 14px;
+
+            border-left: 4px solid #5b82ad;
+
+            color: #1f2937;
+            font-size: 1.5rem;
+            line-height: 1.4;
+        }
+
+
+        /* =========================================
+   会場
+========================================= */
+
+        .access-container {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            overflow: hidden;
+
+            background: #fff;
+            border: 1px solid #e5eaf0;
+            border-radius: 18px;
+
+            box-shadow: 0 8px 25px rgba(31, 41, 55, 0.06);
+        }
+
+        .access-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            padding: 35px;
+        }
+
+        .section-label {
+            margin: 0 0 8px;
+
+            color: #6d93bb;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+        }
+
+        .access-info h3 {
+            margin: 0 0 18px;
+
+            color: #1f2937;
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
+
+        .address {
+            margin: 0;
+            color: #596273;
+            line-height: 1.8;
+        }
+
+        .map-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            width: fit-content;
+            margin-top: 24px;
+            padding: 10px 15px;
+
+            color: #426b96;
+            background: #f1f6fa;
+
+            border-radius: 8px;
+
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+
+            transition: background 0.2s ease;
+        }
+
+        .map-link:hover {
+            background: #e7f0f7;
+        }
+
+        .map iframe {
+            display: block;
+        }
+
+
+        /* =========================================
+   交通
+========================================= */
+
+        .transport-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-card {
+            padding: 28px;
+
+            background: #fff;
+            border: 1px solid #e5eaf0;
+            border-radius: 16px;
+
+            box-shadow: 0 6px 20px rgba(31, 41, 55, 0.05);
+        }
+
+        .card-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 42px;
+            height: 42px;
+            margin-bottom: 16px;
+
+            color: #4d78a8;
+            background: #edf4f9;
+
+            border-radius: 10px;
+
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+        }
+
+        .info-card h3 {
+            margin: 0 0 14px;
+
+            color: #1f2937;
+            font-size: 1.05rem;
+        }
+
+        .info-card p {
+            margin: 0 0 14px;
+
+            color: #596273;
+            font-size: 0.9rem;
+            line-height: 1.9;
+        }
+
+        .route-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            margin: 18px 0;
+            padding: 14px 16px;
+
+            background: #f7f9fb;
+            border-radius: 10px;
+        }
+
+        .route-info strong {
+            color: #344054;
+            font-size: 0.9rem;
+        }
+
+        .route-info span {
+            color: #667085;
+            font-size: 0.82rem;
+        }
+
+        .small-note {
+            color: #7a8493 !important;
+            font-size: 0.78rem !important;
+        }
+
+
+        /* =========================================
+   ご来場にあたって
+========================================= */
+
+        .notice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .notice-item {
+            display: grid;
+            grid-template-columns: 42px 1fr;
+            gap: 16px;
+
+            padding: 22px 24px;
+
+            background: #fff;
+            border: 1px solid #e5eaf0;
+            border-radius: 14px;
+        }
+
+        .notice-number {
+            color: #7a9abb;
+
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .notice-item h3 {
+            margin: 0 0 7px;
+
+            color: #273444;
+            font-size: 0.98rem;
+        }
+
+        .notice-item p {
+            margin: 0;
+
+            color: #626d7c;
+            font-size: 0.87rem;
+            line-height: 1.85;
+        }
+
+
+        /* 重要事項 */
+
+        .important-notice {
+            margin-top: 20px;
+            padding: 20px 22px;
+
+            background: #fff7f7;
+            border: 1px solid #f1d5d5;
+            border-left: 4px solid #d85c5c;
+            border-radius: 12px;
+        }
+
+        .important-notice strong {
+            color: #b33d3d;
+            font-size: 0.9rem;
+        }
+
+        .important-notice p {
+            margin: 8px 0 0;
+
+            color: #6b4b4b;
+            font-size: 0.84rem;
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+   スマートフォン
+========================================= */
+
+        .mobile-only {
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+
+            main>section {
+                width: calc(100% - 24px);
+            }
+
+            .page-title {
+                padding: 48px 10px 42px;
+            }
+
+            .page-title h1 {
+                font-size: 1.9rem;
+            }
+
+            .mobile-only {
+                display: inline;
+            }
+
+            .access,
+            .transport,
+            .parking,
+            .notice {
+                padding: 0 6px;
+                margin-bottom: 55px;
+            }
+
+            .access h2,
+            .transport h2,
+            .parking h2,
+            .notice h2 {
+                margin-bottom: 18px;
+                font-size: 1.3rem;
+            }
+
+
+            /* 会場 */
+
+            .access-container {
+                grid-template-columns: 1fr;
+            }
+
+            .access-info {
+                padding: 24px;
+            }
+
+            .map iframe {
+                height: 240px;
+            }
+
+
+            /* 交通 */
+
+            .transport-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .info-card {
+                padding: 22px;
+            }
+
+
+            /* 注意事項 */
+
+            .notice-item {
+                grid-template-columns: 32px 1fr;
+                gap: 10px;
+
+                padding: 18px;
+            }
+
+            .notice-item h3 {
+                font-size: 0.94rem;
+            }
+
+            .notice-item p {
+                font-size: 0.84rem;
+            }
+
+        }
+    </style>
+
+    <script src="./scripts/script.js" defer></script>
+    <title>ご来場の方へ</title>
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+                    <!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->
+                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main>
+
+        <!-- ページタイトル -->
+        <section class="page-title">
+            <p class="page-eyebrow">VISITOR INFORMATION</p>
+            <h1>ご来場のみなさまへ</h1>
+            <p>
+                会場へのアクセス・交通手段・駐車場・<br class="mobile-only">
+                ご来場にあたっての注意事項をご案内します。
+            </p>
+        </section>
+
+
+        <!-- 会場 -->
+        <section class="access" id="access">
+
+            <h2>会場</h2>
+
+            <div class="access-container">
+
+                <div class="access-info">
+
+
+                    <h3>国立松江工業高等専門学校</h3>
+
+                    <p class="address">
+                        〒690-0865<br>
+                        島根県松江市西生馬町14-4
+                    </p>
+
+                    <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=島根県松江市西生馬町14-4"
+                        target="_blank" rel="noopener noreferrer">
+                        Google Mapで開く
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+                <div class="map">
+                    <iframe src="https://www.google.com/maps?q=島根県松江市西生馬町14-4&z=15&output=embed" width="100%"
+                        height="300" style="border:0;" loading="lazy" title="国立松江工業高等専門学校の地図">
+                    </iframe>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- 交通 -->
+        <section class="transport" id="transport">
+
+            <h2>交通アクセス</h2>
+
+            <div class="transport-grid">
+
+                <div class="info-card">
+
+                    <div class="card-icon">BUS</div>
+
+                    <h3>公共交通機関でお越しの方</h3>
+
+                    <p>
+                        JR松江駅から一畑バスをご利用いただけます。
+                    </p>
+
+                    <div class="route-info">
+                        <strong>一畑バス 恵曇行き</strong>
+                        <span>所要時間：約30分</span>
+                    </div>
+
+                    <p class="small-note">
+                        ※当日の運行状況・時刻表については、
+                        各交通機関の案内をご確認ください。
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="card-icon">CAR</div>
+
+                    <h3>車でお越しの方</h3>
+
+                    <p>
+                        高専祭当日は、グラウンドに駐車場を設けております。
+                        誘導員の指示に従って駐車してください。
+                    </p>
+
+                    <p>
+                        駐車場には限りがあります。
+                        できるだけ公共交通機関や乗り合わせでの
+                        ご来場にご協力ください。
+                    </p>
+
+                    <p class="small-note">
+                        グラウンド駐車場が満車の場合、
+                        近隣の提携駐車場へご案内する場合があります。
+                    </p>
+
+                </div>
+
+                <!-- 重要事項 -->
+                <div class="important-notice">
+
+                    <strong>駐車場についてのお願い</strong>
+
+                    <p>
+                        指定場所以外への駐車や、近隣施設・道路への
+                        無断駐車はご遠慮ください。
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- 注意事項 -->
+        <section class="notice" id="notice">
+
+            <h2>ご来場にあたって</h2>
+
+            <div class="notice-list">
+
+                <div class="notice-item">
+
+                    <div class="notice-number">01</div>
+
+                    <div>
+                        <h3>安全にご注意ください</h3>
+                        <p>
+                            会場内ではスタッフの案内や掲示に従ってください。
+                            混雑時には、通行や入場を制限する場合があります。
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <div class="notice-number">02</div>
+
+                    <div>
+                        <h3>ゴミについて</h3>
+                        <p>
+                            会場内の各所にゴミ箱を設置しております。
+                            ゴミの分別・廃棄にご協力いただき、
+                            ポイ捨て等はおやめください。
+                            <br>
+                            会場をきれいに保つため、皆様のご協力をお願いいたします。
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <div class="notice-number">03</div>
+
+                    <div>
+                        <h3>貴重品について</h3>
+                        <p>
+                            貴重品は各自で管理してください。
+                            会場内での紛失・盗難について、
+                            主催者は責任を負いかねます。
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <div class="notice-number">04</div>
+
+                    <div>
+                        <h3>写真・動画撮影について</h3>
+                        <p>
+                            会場内では写真・動画撮影を行う場合があります。
+                            撮影した映像や写真を高専祭の広報活動等に
+                            使用する場合がありますので、あらかじめご了承ください。
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="notice-item">
+
+                    <div class="notice-number">05</div>
+
+                    <div>
+                        <h3>その他</h3>
+                        <p>
+                            会場内では、スタッフの指示および会場のルールに従ってください。
+                            他の来場者の迷惑となる行為はお控えください。
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+        </section>
+
+    </main>
+
+    <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

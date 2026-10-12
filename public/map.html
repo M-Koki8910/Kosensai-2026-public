@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭の会場配置や各エリアを確認できる会場マップです。">
+    <meta property="og:title" content="会場マップ | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭の会場配置や各エリアを確認できる会場マップです。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/map.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/tweet.js"></script>
+
+    <title>会場マップ</title>
+
+    <style>
+        /* ==========================
+   Map Page
+========================== */
+
+        .map-page {
+            width: 100%;
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+
+        /* --------------------------------
+   マップタブ
+-------------------------------- */
+
+        .map-tabs {
+            display: flex;
+            gap: 10px;
+
+            margin-bottom: 12px;
+        }
+
+        .map-tabs button {
+            flex: 1;
+
+            border: none;
+            border-radius: 999px;
+
+            padding: 12px;
+
+            font-size: 1rem;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background: #ddd;
+            color: #333;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.1s ease;
+        }
+
+        .map-tabs button:hover {
+            background: #ccc;
+        }
+
+        .map-tabs button:active {
+            transform: scale(0.98);
+        }
+
+        .map-tabs button.active {
+            background: #1aa4e8;
+            color: #fff;
+        }
+
+        /* --------------------------------
+   校舎階層タブ
+-------------------------------- */
+
+        .map-floor-tabs {
+            display: none;
+
+            gap: 10px;
+
+            margin-top: -2px;
+            margin-bottom: 12px;
+        }
+
+        .map-floor-tabs.visible {
+            display: flex;
+        }
+
+        .map-floor-tabs button {
+            flex: 1;
+
+            border: none;
+            border-radius: 999px;
+
+            padding: 10px;
+
+            font-size: 0.95rem;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background: #e5e7eb;
+            color: #333;
+        }
+
+        .map-floor-tabs button.active {
+            background: #1aa4e8;
+            color: #fff;
+        }
+
+        /* --------------------------------
+   マップ本体
+-------------------------------- */
+
+        .map-board {
+            background: #8fd0ee;
+
+            border-radius: 32px;
+
+            padding: 16px 16px 18px;
+
+            box-sizing: border-box;
+        }
+
+        .map-main {
+            width: 100%;
+
+            aspect-ratio: 16 / 9;
+            min-height: 300px;
+
+            background: rgb(255, 255, 255);
+
+            border: 2px solid #18354a;
+
+            border-radius: 32px;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        /* Leaflet表示領域 */
+
+        .map-container {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .leaflet-container,
+        .leaflet-pane,
+        .leaflet-tile-pane,
+        .leaflet-overlay-pane,
+        .leaflet-shadow-pane,
+        .leaflet-marker-pane,
+        .leaflet-tooltip-pane,
+        .leaflet-popup-pane,
+        .leaflet-control-container,
+        .leaflet-top,
+        .leaflet-bottom {
+            z-index: 1 !important;
+        }
+
+        .leaflet-control,
+        .leaflet-control-attribution {
+            z-index: 2 !important;
+        }
+
+        /* --------------------------------
+   ポップアップ
+-------------------------------- */
+
+        .map-popup-title {
+            margin-bottom: 6px;
+
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .map-popup-description {
+            margin-bottom: 10px;
+
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        .map-popup-link {
+            display: inline-block;
+
+            padding: 8px 12px;
+
+            border-radius: 8px;
+
+            background: #1aa4e8;
+            color: #fff;
+
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+        .map-popup-link:hover {
+            opacity: 0.85;
+        }
+
+        /* --------------------------------
+   スマートフォン
+-------------------------------- */
+
+        @media (max-width: 600px) {
+
+            .map-page {
+                margin: 16px auto;
+            }
+
+            .map-tabs {
+                gap: 8px;
+            }
+
+            .map-tabs button {
+                padding: 11px 8px;
+
+                font-size: 0.9rem;
+            }
+
+            .map-floor-tabs {
+                gap: 8px;
+            }
+
+            .map-floor-tabs button {
+                padding: 10px 8px;
+
+                font-size: 0.9rem;
+            }
+
+            .map-board {
+                border-radius: 24px;
+
+                padding: 10px;
+            }
+
+            .map-main {
+                border-radius: 22px;
+                min-height: 260px;
+            }
+
+            .map-container {
+                min-height: 0;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- ==============================================
+         ヘッダー
+    =============================================== -->
+
+    <div class="topbar">
+
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+
+        <button class="menu-toggle" aria-label="メニューを開く">
+            ☰
+        </button>
+
+    </div>
+
+
+    <!-- ==============================================
+         ナビゲーション
+    =============================================== -->
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <!-- ==============================================
+         メイン
+    =============================================== -->
+
+    <main class="map-page">
+
+        <h2>会場マップ</h2>
+
+        <!-- 大分類 -->
+        <div class="map-tabs">
+
+            <button type="button" class="map-tab-button active" data-map-group="campus">
+                構内全体図
+            </button>
+
+            <button type="button" class="map-tab-button" data-map-group="stalls">
+                模擬店詳細図
+            </button>
+
+            <button type="button" class="map-tab-button" data-map-group="building">
+                校舎
+            </button>
+
+        </div>
+
+
+        <!-- 校舎階層 -->
+        <div class="map-floor-tabs">
+
+            <button type="button" class="map-floor-tab active" data-map="building1f">
+                1F
+            </button>
+
+            <button type="button" class="map-floor-tab" data-map="building2f">
+                2F
+            </button>
+
+            <button type="button" class="map-floor-tab" data-map="building3f">
+                3F
+            </button>
+
+            <button type="button" class="map-floor-tab" data-map="building4f">
+                4棟4F
+            </button>
+
+        </div>
+
+
+        <!-- マップ -->
+        <div class="map-board">
+
+            <div class="map-main">
+
+                <div id="map" class="map-container" aria-label="会場マップ">
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==============================================
+         フッター
+    =============================================== -->
+
+    <footer>
+
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>2026 松江高専 高専祭実行委員会</p>
+        </div>
+
+    </footer>
+
+    <!-- ==============================================
+         マップ制御
+    =============================================== -->
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            /* ------------------------------------------
+               マップデータ
+            ------------------------------------------ */
+
+            const mapData = {
+
+                //構内全体図
+                campus: {
+                    url: './images/maps/1.svg',
+                    width: 4496,
+                    height: 2850,
+
+                    markers: [],
+
+                    areas: [
+                        {
+                            title: '体育館',
+                            bounds: [
+                                [2830, 2557],//右上
+                                [2090, 2070] //左下
+                            ],
+                            link: './event.html?location=gym'
+                        },
+                        {
+                            title: '模擬店エリア',
+                            bounds: [
+                                [1708, 2555],//右上
+                                [1530, 1175] //左下
+                            ],
+                            link: './shop.html'
+                        },
+                        {
+                            title: '模擬店エリア',
+                            bounds: [
+                                [1987, 2555],//右上
+                                [1742, 2410] //左下
+                            ],
+                            link: './shop.html'
+                        },
+                        {
+                            title: '学びの庭ステージ',
+                            bounds: [
+                                [1300, 2280],
+                                [1150, 1400]
+                            ],
+                            link: './event.html?location=courtyard'
+                        }
+                    ]
+                },
+
+                //模擬店詳細図
+                stalls: {
+                    url: './images/maps/2.svg',
+                    width: 4400,
+                    height: 2708,
+
+                    markers: [],
+
+                    //同じように領域を追加する
+                    areas: [
+                        {
+                            title: 'ラグビー部',
+                            bounds: [
+                                [595, 1960],
+                                [475, 1700]
+                            ],
+                            link: './shop.html#shop-14'
+                        },
+                        {
+                            title: '男子バスケットボール部',
+                            bounds: [
+                                [595, 2228],
+                                [475, 1968]
+                            ],
+                            link: './shop.html#shop-15'
+                        },
+                        {
+                            title: '水泳部',
+                            bounds: [
+                                [595, 2496],
+                                [475, 2236]
+                            ],
+                            link: './shop.html#shop-19'
+                        },
+                        {
+                            title: '女子バレーボール部',
+                            bounds: [
+                                [2232, 2682],
+                                [2112, 2422]
+                            ],
+                            link: './shop.html#shop-17'
+                        },
+                        {
+                            title: '文芸部・漫画研究会',
+                            bounds: [
+                                [2108, 2682],
+                                [1986, 2422]
+                            ],
+                            link: './shop.html#shop-25'
+                        },
+                        {
+                            title: 'ソフトテニス部',
+                            bounds: [
+                                [2109, 3565],
+                                [1990, 3305]
+                            ],
+                            link: './shop.html#shop-11'
+                        },
+                        {
+                            title: 'S2',
+                            bounds: [
+                                [1987, 3565],
+                                [1868, 3305]
+                            ],
+                            link: './shop.html#shop-7'
+                        },
+                        {
+                            title: '卓球部',
+                            bounds: [
+                                [1865, 3565],
+                                [1746, 3305]
+                            ],
+                            link: './shop.html#shop-10'
+                        },
+                        {
+                            title: '留学生',
+                            bounds: [
+                                [1743, 3565],
+                                [1627, 3305]
+                            ],
+                            link: './shop.html#shop-30'
+                        },
+                        {
+                            title: 'デザコン',
+                            bounds: [
+                                [1621, 3565],
+                                [1507, 3305]
+                            ],
+                            link: './shop.html#shop-28'
+                        },
+                        {
+                            title: 'レスコン',
+                            bounds: [
+                                [1504, 3565],
+                                [1388, 3305]
+                            ],
+                            link: './shop.html#shop-29'
+                        },
+                        {
+                            title: 'D3',
+                            bounds: [
+                                [1385, 3565],
+                                [1268, 3305]
+                            ],
+                            link: './shop.html#shop-2'
+                        },
+                        {
+                            title: 'C4',
+                            bounds: [
+                                [1263, 3565],
+                                [1147, 3305]
+                            ],
+                            link: './shop.html#shop-5'
+                        },
+                        {
+                            title: '弓道部',
+                            bounds: [
+                                [1142, 3565],
+                                [1025, 3305]
+                            ],
+                            link: './shop.html#shop-18'
+                        },
+                        {
+                            title: '専攻科2年',
+                            bounds: [
+                                [1022, 3565],
+                                [905, 3305]
+                            ],
+                            link: './shop.html#shop-8'
+                        },
+                        {
+                            title: '写真部',
+                            bounds: [
+                                [902, 3565],
+                                [784, 3305]
+                            ],
+                            link: './shop.html#shop-22'
+                        },
+                        {
+                            title: '陸上部',
+                            bounds: [
+                                [780, 3565],
+                                [663, 3305]
+                            ],
+                            link: './shop.html#shop-20'
+                        },
+                        {
+                            title: '男子バレーボール部',
+                            bounds: [
+                                [660, 3565],
+                                [543, 3305]
+                            ],
+                            link: './shop.html#shop-16'
+                        },
+                        {
+                            title: 'エコラン',
+                            bounds: [
+                                [540, 3565],
+                                [420, 3305]
+                            ],
+                            link: './shop.html#shop-27'
+                        },
+                        {
+                            title: 'サッカー部',
+                            bounds: [
+                                [415, 3565],
+                                [298, 3305]
+                            ],
+                            link: './shop.html#shop-9'
+                        },
+                        {
+                            title: 'ハンドボール部',
+                            bounds: [
+                                [282, 3718],
+                                [165, 3463]
+                            ],
+                            link: './shop.html#shop-12'
+                        },
+                        {
+                            title: '吹奏楽部',
+                            bounds: [
+                                [282, 3984],
+                                [165, 3727]
+                            ],
+                            link: './shop.html#shop-23'
+                        },
+                        {
+                            title: '野球部',
+                            bounds: [
+                                [282, 4246],
+                                [165, 3990]
+                            ],
+                            link: './shop.html#shop-13'
+                        },
+                    ]
+                },
+                //校舎1F
+                building1f: {
+                    url: './images/maps/3.svg',
+                    width: 4400,
+                    height: 2480,
+                    markers: [],
+                    areas: [
+                        {
+                            title: 'プラネタリウムカフェ',
+                            bounds: [
+                                [1240, 3205],
+                                [980, 2750]
+                            ],
+                            link: './shop.html#shop-6'
+                        },
+                        {
+                            title: 'つまみ細工和カフェ',
+                            bounds: [
+                                [1369, 3655],
+                                [1109, 3270]
+                            ],
+                            link: './shop.html#shop-21'
+                        },
+                        {
+                            title: '女装カフェ',
+                            bounds: [
+                                [1369, 4045],
+                                [1109, 3660]
+                            ],
+                            link: './shop.html#shop-1'
+                        },
+                    ]
+                },
+
+                //校舎2F
+                building2f: {
+                    url: './images/maps/4.svg',
+                    width: 4400,
+                    height: 2475,
+                    markers: [],
+                    areas: [
+                        {
+                            title: 'メイドカフェ',
+                            bounds: [
+                                [1155, 3205],
+                                [895, 2750]
+                            ],
+                            link: './shop.html#shop-3'
+                        },
+                        {
+                            title: 'つまみ細工和カフェ',
+                            bounds: [
+                                [1287, 4046],
+                                [1027, 3268]
+                            ],
+                            link: './shop.html#shop-21'
+                        },
+                    ]
+                },
+
+                //校舎3F
+                building3f: {
+                    url: './images/maps/5.svg',
+                    width: 4400,
+                    height: 2475,
+                    markers: [],
+                    areas: [
+                        {
+                            title: 'フォトスポット',
+                            bounds: [
+                                [1155, 3205],
+                                [895, 2750]
+                            ],
+                            link: './shop.html#shop-24'
+                        },
+                        {
+                            title: 'うどん・脱出ゲーム',
+                            bounds: [
+                                [1287, 4046],
+                                [1027, 3268]
+                            ],
+                            link: './shop.html#shop-32'
+                        },
+                        {
+                            title: 'ボードゲームカフェ',
+                            bounds: [
+                                [1970, 1980],
+                                [1500, 1720]
+                            ],
+                            link: './shop.html#shop-4'
+                        }
+                    ]
+                },
+
+                //校舎4F
+                building4f: {
+                    url: './images/maps/6.svg',
+                    width: 2713,
+                    height: 954,
+                    markers: [],
+                    areas: []
+                }
+            };
+
+            /* ------------------------------------------
+               Leaflet
+            ------------------------------------------ */
+
+            const map = L.map('map', {
+                crs: L.CRS.Simple,
+                minZoom: -5,
+                maxZoom: 4,
+                zoomControl: true,
+                attributionControl: false,
+                inertia: true,
+                maxBoundsViscosity: 1.0
+            });
+
+            let currentOverlay = null;
+            let currentLayers = [];
+            let currentBounds = null;
+            let currentMapKey = null;
+
+            let loadToken = 0;
+
+            /* ------------------------------------------
+               ヘルパー
+            ------------------------------------------ */
+
+            function normalizeBounds(bounds) {
+
+                const y1 = bounds[0][0];
+                const x1 = bounds[0][1];
+
+                const y2 = bounds[1][0];
+                const x2 = bounds[1][1];
+
+                return [
+                    [
+                        Math.min(y1, y2),
+                        Math.min(x1, x2)
+                    ],
+                    [
+                        Math.max(y1, y2),
+                        Math.max(x1, x2)
+                    ]
+                ];
+
+            }
+
+            /* function fitMapToFrame(bounds) {
+
+                if (!bounds) return;
+
+                map.invalidateSize();
+
+                map.setMaxBounds(null);
+
+                map.fitBounds(bounds, {
+                    animate: false,
+                    padding: [0, 0]
+                });
+
+                const fittedZoom = map.getZoom();
+
+                map.setMinZoom(fittedZoom);
+
+                map.setMaxBounds(bounds);
+
+            } */
+
+            function fitMapToFrame(bounds) {
+
+                if (!bounds) return;
+
+                map.invalidateSize();
+
+                map.setMaxBounds(null);
+
+                map.fitBounds(bounds, {
+                    animate: false,
+                    padding: [0, 0]
+                });
+
+                const baseZoom = map.getZoom();
+
+                map.setMinZoom(baseZoom);
+
+                const defaultZoomOffset = 0.5;
+                const targetZoom = baseZoom + defaultZoomOffset;
+
+                const center = [
+                    (bounds[0][0] + bounds[1][0]) / 2,
+                    (bounds[0][1] + bounds[1][1]) / 2
+                ];
+
+                map.setView(center, targetZoom, { animate: false });
+
+                map.setMaxBounds(bounds);
+
+            }
+
+            function clearMap() {
+
+                if (currentOverlay) {
+                    map.removeLayer(currentOverlay);
+                    currentOverlay = null;
+                }
+
+                currentLayers.forEach(layer => {
+                    map.removeLayer(layer);
+                });
+
+                currentLayers = [];
+
+            }
+
+            function drawAreas(config) {
+
+                if (!config.areas) return;
+
+                config.areas.forEach(area => {
+
+                    const clickableArea = L.rectangle(
+                        normalizeBounds(area.bounds),
+                        {
+                            color: '#1aa4e8',
+                            weight: 2,
+                            fillColor: '#1aa4e8',
+                            fillOpacity: 0.0,//クリック領域の透明度
+                            opacity: 0.0//クリック領域の枠線
+                        }
+                    );
+
+                    clickableArea.addTo(map);
+
+                    clickableArea.on('click', () => {
+
+                        if (area.link) {
+                            window.location.href = area.link;
+                        }
+
+                    });
+
+                    currentLayers.push(clickableArea);
+
+                });
+
+            }
+
+            /* ------------------------------------------
+               マップ読み込み
+            ------------------------------------------ */
+
+            function loadMap(key) {
+
+                console.log("loadMap", key);
+
+                const config = mapData[key];
+
+                if (!config) {
+                    console.error("マップ設定なし:", key);
+                    return;
+                }
+
+                const token = ++loadToken;
+
+                currentMapKey = key;
+
+                clearMap();
+
+                const bounds = [
+                    [0, 0],
+                    [config.height, config.width]
+                ];
+
+                currentBounds = bounds;
+
+                console.log("svg =", config.url);
+                console.log("bounds =", bounds);
+
+                currentOverlay = L.imageOverlay(
+                    config.url,
+                    bounds,
+                    {
+                        interactive: false
+                    }
+                );
+
+                console.log("overlay =", currentOverlay);
+                console.log("L =", L);
+                console.log("imageOverlay =", L.imageOverlay);
+
+                currentOverlay.addTo(map);
+
+                console.log(
+                    "map size =",
+                    document.getElementById("map").clientWidth,
+                    document.getElementById("map").clientHeight
+                );
+
+                console.log(
+                    "overlay in map =",
+                    map.hasLayer(currentOverlay)
+                );
+
+                requestAnimationFrame(() => {
+
+                    if (token !== loadToken) {
+                        return;
+                    }
+
+                    fitMapToFrame(bounds);
+
+                    drawAreas(config);
+
+                });
+
+            }
+
+            /* ------------------------------------------
+               大分類タブ
+            ------------------------------------------ */
+
+            const groupToMapKey = {
+                campus: 'campus',
+                stalls: 'stalls'
+            };
+
+            const floorTabs =
+                document.querySelector('.map-floor-tabs');
+
+            const tabButtons =
+                document.querySelectorAll('.map-tab-button');
+
+            const floorButtons =
+                document.querySelectorAll('.map-floor-tab');
+
+            function resolveRequestedMapKey(rawKey) {
+
+                if (!rawKey) {
+                    return 'campus';
+                }
+
+                const normalized = rawKey.trim().toLowerCase();
+
+                if (!normalized) {
+                    return 'campus';
+                }
+
+                if (normalized in mapData) {
+                    return normalized;
+                }
+
+                if (normalized === 'building') {
+                    return 'building1f';
+                }
+
+                if (normalized.startsWith('building')) {
+                    return normalized;
+                }
+
+                if (normalized === 'campus' || normalized === 'stalls') {
+                    return normalized;
+                }
+
+                return 'campus';
+
+            }
+
+            function applyMapSelection(selectedKey) {
+
+                const buildingKeys = ['building1f', 'building2f', 'building3f', 'building4f'];
+                const targetGroup = buildingKeys.includes(selectedKey)
+                    ? 'building'
+                    : (selectedKey === 'stalls' ? 'stalls' : 'campus');
+
+                tabButtons.forEach(button => {
+                    button.classList.toggle(
+                        'active',
+                        button.dataset.mapGroup === targetGroup
+                    );
+                });
+
+                if (targetGroup === 'building') {
+                    setFloorTabVisible(true);
+                    floorButtons.forEach(button => {
+                        button.classList.toggle(
+                            'active',
+                            button.dataset.map === selectedKey
+                        );
+                    });
+                } else {
+                    setFloorTabVisible(false);
+                    floorButtons.forEach(button => {
+                        button.classList.remove('active');
+                    });
+                }
+
+            }
+
+            function setFloorTabVisible(show) {
+
+                floorTabs.classList.toggle(
+                    'visible',
+                    show
+                );
+
+            }
+
+            function getActiveFloorKey() {
+
+                const active =
+                    document.querySelector(
+                        '.map-floor-tab.active'
+                    );
+
+                return active?.dataset.map || 'building1f';
+
+            }
+
+            tabButtons.forEach(button => {
+
+                button.addEventListener('click', () => {
+
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    button.classList.add('active');
+
+                    const group =
+                        button.dataset.mapGroup;
+
+                    if (group === 'building') {
+
+                        setFloorTabVisible(true);
+
+                        loadMap(
+                            getActiveFloorKey()
+                        );
+
+                    } else {
+
+                        setFloorTabVisible(false);
+
+                        loadMap(
+                            groupToMapKey[group]
+                        );
+
+                    }
+
+                });
+
+            });
+
+            floorButtons.forEach(button => {
+
+                button.addEventListener('click', () => {
+
+                    floorButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+
+                    button.classList.add('active');
+
+                    const buildingTab =
+                        document.querySelector(
+                            '[data-map-group="building"]'
+                        );
+
+                    if (
+                        !buildingTab.classList.contains(
+                            'active'
+                        )
+                    ) {
+                        return;
+                    }
+
+                    loadMap(button.dataset.map);
+
+                });
+
+            });
+
+            /* ------------------------------------------
+               リサイズ
+            ------------------------------------------ */
+
+            window.addEventListener('resize', () => {
+
+                if (!currentBounds) return;
+
+                fitMapToFrame(currentBounds);
+
+            });
+
+            /* ------------------------------------------
+               初期ロード
+            ------------------------------------------ */
+
+            const initialMapKey = resolveRequestedMapKey(
+                new URLSearchParams(window.location.search).get('map')
+            );
+
+            applyMapSelection(initialMapKey);
+
+            window.addEventListener('load', () => {
+
+                loadMap(initialMapKey);
+
+            });
+
+            /* ------------------------------------------
+               座標取得（開発用）
+            ------------------------------------------ */
+
+            map.on('click', event => {
+
+                console.log(
+                    `[${currentMapKey}]`,
+                    [
+                        Math.round(event.latlng.lat),
+                        Math.round(event.latlng.lng)
+                    ]
+                );
+
+            });
+
+            console.log(
+                "svg path =",
+                mapData.campus.url
+            );
+
+
+        });
+
+    </script>
+
+</body>
+
+</html>

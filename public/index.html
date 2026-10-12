@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="第61回 松江高専 高専祭の特設WEBページです。高専祭の概要、模擬店紹介、ゲスト情報、イベント情報、アクセス情報などを掲載しています。">
+    <title>松江高専 高専祭特設WEBページ</title>
+
+    <meta property="og:title" content="松江高専 高専祭特設WEBページ">
+    <meta property="og:description" content="第61回 松江高専 高専祭の特設WEBページです。高専祭の概要、模擬店紹介、ゲスト情報、イベント情報、アクセス情報などを掲載しています。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.7.0/minified/html5-qrcode.min.js"></script>
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+    <style>
+        /* ===================================
+   白背景・Apple風アイキャッチ（完全中央揃え）
+   =================================== */
+        .apple-hero-container {
+            height: 260vh;
+            background-color: #ffffff;
+            color: #1d1d1f;
+            position: relative;
+            z-index: 10;
+        }
+
+        .apple-hero-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 各ステップの共通スタイル（上下左右中央揃え） */
+        .hero-step {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            /* 最初から画面の真真ん中に配置 */
+            transform: translate(-50%, -50%) scale(1);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* テキストの水平中央揃え */
+
+            width: 100%;
+            max-width: 1000px;
+            /* 横幅が広がりすぎないよう保護 */
+            padding: 0 20px;
+            box-sizing: border-box;
+            will-change: transform, opacity;
+        }
+
+        /* 【ステップ1】テーマテキスト（3行構成・中央揃え） */
+        .hero-catchphrase-3lines {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 3行のテキスト同士を中央揃え */
+            justify-content: center;
+            gap: 16px;
+            font-size: clamp(4rem, 15vw, 7rem);
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: 0.1em;
+            color: #111827;
+            margin: 0;
+        }
+
+        .hero-catchphrase-3lines span {
+            display: block;
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 【ステップ2】ロゴ（完全中央揃え・はみ出し防止） */
+        .hero-logo-img {
+            display: block;
+            margin: 0 auto;
+            /* 画像の左右中央揃え */
+            width: auto;
+            /* 画面からはみ出さない絶妙なサイズ（高さ基準） */
+            max-height: 100vh;
+            max-width: 90vw;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 30px rgba(37, 99, 235, 0.15));
+        }
+
+        /* 初期状態：ロゴの待機状態 */
+        .step-logo {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        /* PCでは拡大後もロゴが大きくなりすぎないように調整 */
+        @media (min-width: 769px) {
+            .step-logo {
+                top: 50%;
+            }
+
+            .hero-logo-img {
+                width: min(34vw, 480px);
+                max-width: 100%;
+                max-height: 70vh;
+            }
+        }
+
+        /* スクロール誘導矢印（中央下部固定） */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            /* 水平中央配置 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translate(-50%, 0);
+            }
+
+            40% {
+                transform: translate(-50%, -8px);
+            }
+
+            60% {
+                transform: translate(-50%, -4px);
+            }
+        }
+
+        /* メインコンテンツへの自然な接続 */
+        .main-wrapper {
+            position: relative;
+            z-index: 20;
+            background: #ffffff;
+            padding-top: 10px;
+        }
+
+        /*ロゴスライダー*/
+        .sponsor-section {
+
+            padding: 60px 0;
+
+            background: #fff;
+
+        }
+
+
+
+        .sponsor-section h2 {
+
+            text-align: center;
+
+            margin-bottom: 40px;
+
+        }
+
+
+
+        .logo-slider {
+
+            width: 100%;
+
+            overflow: hidden;
+
+            position: relative;
+
+            margin: 20px 0;
+
+        }
+
+
+
+        .logo-track {
+
+            display: flex;
+
+            width: max-content;
+
+            animation: logoScroll 50s linear infinite;
+        }
+
+        #logoTrack2 {
+            display: flex;
+        }
+
+        @media (min-width: 600px) {
+            #logoTrack2 {
+                display: none;
+            }
+        }
+
+
+
+        .logo-slider.reverse .logo-track {
+
+            animation-direction: reverse;
+
+        }
+
+
+
+        .logo-track img {
+
+            width: 120px;
+
+            height: 90px;
+
+            object-fit: contain;
+
+            margin: 0 8px;
+
+            user-select: none;
+
+            -webkit-user-drag: none;
+
+        }
+
+
+
+        .logo-slider:hover .logo-track {
+
+            animation-play-state: paused;
+
+        }
+
+
+
+        @keyframes logoScroll {
+
+            from {
+
+                transform: translateX(0);
+
+            }
+
+
+
+            to {
+
+                transform: translateX(-50%);
+
+            }
+
+        }
+
+
+
+        /* 左右フェード */
+
+
+
+        .logo-slider::before,
+
+        .logo-slider::after {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            width: 120px;
+
+            height: 100%;
+
+            z-index: 2;
+
+            pointer-events: none;
+
+        }
+
+
+
+        .logo-slider::before {
+
+            left: 0;
+
+            background: linear-gradient(to right, #fff, transparent);
+
+        }
+
+
+
+        .logo-slider::after {
+
+            right: 0;
+
+            background: linear-gradient(to left, #fff, transparent);
+
+        }
+    </style>
+
+    <!-- <style>
+       /* 全体を縦に積む */
+.announcement-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* 2つの間隔 */
+}
+
+/* 共通デザイン */
+.announcement-ticker {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 44px;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+/* 左ラベル */
+.ticker-label {
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background: #333;
+    color: #fff;
+}
+
+/* 中身エリア */
+.ticker-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #f5f5f5;
+    padding: 0 10px;
+}
+
+/* テキスト */
+.ticker-content {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%; 
+    animation: ticker-scroll 10s linear infinite;
+  
+}
+
+/* アニメーション */
+@keyframes ticker-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* =========================
+   お知らせ用（通常）
+========================= */
+.announcement-ticker:not(.warning-ticker) .ticker-label {
+    background: #2b6cb0;
+}
+
+/* =========================
+   注意バー（履歴保持）
+========================= */
+.warning-ticker .ticker-label {
+    background: #c53030;
+}
+
+.warning-ticker .ticker-container {
+    background: #fff5f5;
+    color: #742a2a;
+    font-weight: 500;
+}
+    </style>-->
+</head>
+
+<body>
+
+    <!-- === Apple風アイキャッチセクション（白背景・2ステップ構成） === -->
+    <div class="apple-hero-container" id="appleHero">
+        <div class="apple-hero-sticky">
+
+            <!-- ステップ1：テーマテキスト（3行構成） -->
+            <div class="hero-step step-text" id="stepText">
+                <h1 class="hero-catchphrase-3lines">
+                    <span>つくる</span>
+                    <span>つながる</span>
+                    <span>高専祭</span>
+                </h1>
+            </div>
+
+            <!-- ステップ2：ロゴ画像 -->
+            <div class="hero-step step-logo" id="stepLogo">
+                <img src="./images/logo.png" alt="高専祭テーマロゴ" class="hero-logo-img">
+            </div>
+
+            <!-- スクロール誘導 -->
+            <div class="scroll-indicator">
+                <span>SCROLL</span>
+                <div class="arrow"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+
+        <div class="topbar">
+            <a href="./index.html" class="home-link">
+                <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+            </a>
+            <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+        </div>
+
+
+        <nav id="nav">
+            <ul class="nav-list">
+
+                <li class="nav-group">
+                    <button class="nav-group-toggle">
+                        高専祭を知る
+                        <span>＋</span>
+                    </button>
+
+                    <ul class="nav-submenu">
+                        <li><a href="./about.html">高専祭について</a></li>
+                        <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-group">
+                    <button class="nav-group-toggle">
+                        楽しむ・参加する
+                        <span>＋</span>
+                    </button>
+
+                    <ul class="nav-submenu">
+                        <li><a href="./shop.html">模擬店紹介</a></li>
+                        <li><a href="./guest.html">ゲスト紹介</a></li>
+                        <li><a href="./event.html">イベント紹介</a></li>
+<!--                         <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                        <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-group">
+                    <button class="nav-group-toggle">
+                        会場案内
+                        <span>＋</span>
+                    </button>
+
+                    <ul class="nav-submenu">
+                        <li><a href="./schedule.html">スケジュール</a></li>
+                        <li><a href="./map.html">会場マップ</a></li>
+                        <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-group">
+                    <button class="nav-group-toggle">
+                        その他
+                        <span>＋</span>
+                    </button>
+
+                    <ul class="nav-submenu">
+                        <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                        <li><a href="./announcements.html">お知らせ</a></li>
+                        <li><a href="./bulletin.html">掲示板</a></li>
+                        <li><a href="./flyers.html">ポスター・パンフレット</a></li>
+                        <li><a href="./aboutme.html">このサイトについて</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
+        <main>
+
+            <!-- ヒーロー -->
+            <section class="hero">
+                <div class="hero-text">
+                    <h1>第61回 高専祭</h1>
+                    <h1>今年も開催します!</h1>
+                    <p class="hero-lead">10月10日～10月11日の2日間</p>
+                    <p class="hero-lead">模擬店や展示ステージイベントが楽しめます。</p>
+                    <p class="hero-lead">今年の高専祭には、去年まではなかった試みも満載</p>
+                    <p class="hero-lead">高専に興味がある方、技術に興味がある方</p>
+                    <p class="hero-lead">ぜひお越しください!</p>
+                </div>
+            </section>
+
+            <!-- ゲストセクション -->
+            <section class="guest">
+                <h2>今年のゲスト</h2>
+
+                <section class="guest-highlight">
+                    <div class="container guest-box">
+
+                        <div class="guest-image">
+                            <img id="guest-img" src="./images/guest.jpg" alt="ゲスト">
+                        </div>
+
+                        <div class="guest-text">
+                            <p class="guest-label">SPECIAL GUEST</p>
+                            <h2 id="guest-name">かっつー</h2>
+                            <p id="guest-desc">
+                                総フォロワー数150万人超の大人気YouTuberがやってくる！
+                            </p>
+
+                            <a href="./guest.html" class="guest-btn">詳しく見る →</a>
+                        </div>
+
+                    </div>
+                </section>
+            </section>
+
+            <section class="cards container">
+                <h2>体験型コンテンツ</h2>
+                <a href="./stamp-rally.html" class="card">
+                    <img src="./images/stamp.png" alt="スタンプラリー">
+                    <div class="card-body">
+                        <h3>スタンプラリー</h3>
+                        <p>会場を巡ってQRコードを読み取り、スタンプを集めましょう。</p>
+                    </div>
+                </a>
+
+            </section>
+
+            <section class="cards container">
+                <h2>気になる情報をチェック</h2>
+
+                <a href="./about.html" class="card">
+                    <img src="./images/kosensai-ilust.png" alt="高専祭とは">
+                    <div class="card-body">
+                        <h3>高専祭とは</h3>
+                        <p>高専祭の概要や見どころを紹介します。</p>
+                    </div>
+                </a>
+
+                <a href="./shop.html" class="card">
+                    <img src="./images/shop.jpg" alt="模擬店紹介">
+                    <div class="card-body">
+                        <h3>模擬店紹介</h3>
+                        <p>飲食や販売ブースの情報はこちら。</p>
+                    </div>
+                </a>
+
+                <a href="./event.html" class="card">
+                    <img src="./images/event.jpeg" alt="イベント紹介">
+                    <div class="card-body">
+                        <h3>イベント紹介</h3>
+                        <p>ステージイベントなどをチェック。</p>
+                    </div>
+                </a>
+
+                <!-- <a href="./exhibition.html" class="card">
+                    <img src="./images/kosensai-ilust.png" alt="展示紹介">
+                    <div class="card-body">
+                        <h3>展示紹介</h3>
+                        <p>学科展示やコンテスト展示を体験しよう。</p>
+                    </div>
+                </a> -->
+
+                <!-- <a href="./schedule.html" class="card">
+                    <img src="./images/schedule.jpg" alt="イベントスケジュール">
+                    <div class="card-body">
+                        <h3>展示紹介</h3>
+                        <p></p>
+                    </div>
+                </a> -->
+            </section>
+
+            <section class="sponsor-section">
+                <h2>ご協賛企業様</h2>
+
+                <div class="logo-slider">
+                    <div class="logo-track" id="logoTrack1">
+                        <!-- JavaScriptで生成 -->
+                    </div>
+                </div>
+
+                <div class="logo-slider reverse">
+                    <div class="logo-track" id="logoTrack2">
+                        <!-- JavaScriptで生成 -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="announcement-section" aria-label="お知らせと重要案内">
+
+                <h2>お知らせ</h2>
+
+
+                <div class="announcement-wrapper">
+                    <div class="announcement-ticker info-ticker">
+                        <div class="ticker-label">お知らせ</div>
+                        <div class="ticker-container">
+                            <div class="ticker-content" data-ticker-type="normal" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- アクセス -->
+
+            <section class="access" id="access">
+                <h2>アクセス</h2>
+
+                <div class="access-container">
+
+                    <!-- 左：文字情報 -->
+                    <div class="access-info">
+                        <h3>松江工業高等専門学校</h3>
+                        <p>〒690-0865 島根県松江市西生馬町14-4</p>
+                        <p>JR松江駅から一畑バス恵曇行き 30分</p>
+
+                        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=島根県松江市西生馬町14-4"
+                            target="_blank">
+                            Google Mapで開く
+                        </a>
+                    </div>
+
+                    <!-- 右：マップ -->
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps?q=島根県松江市西生馬町14-4&z=15&output=embed" width="100%"
+                            height="300" style="border:0;" loading="lazy">
+                        </iframe>
+
+                        <div class="access-sns">
+                            <div class="access-sns-card">
+                                <p class="access-sns-kicker">Follow us</p>
+                                <h3>公式SNSをフォローお願いします</h3>
+                                <p class="access-sns-text">最新の情報やイベントの告知をチェックできます。</p>
+                                <div class="access-sns-links">
+                                    <a class="nav-social" href="https://www.instagram.com/mct_relations/"
+                                        target="_blank" rel="noopener noreferrer">
+                                        <img src="./images/insta.png" alt="Instagram" class="nav-social-icon">学校広報
+                                    </a>
+                                    <a class="nav-social" href="https://www.instagram.com/mct_gakuseikai/"
+                                        target="_blank" rel="noopener noreferrer">
+                                        <img src="./images/insta.png" alt="Instagram" class="nav-social-icon">学生会
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> &copy; 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+    <script>
+        //アイキャッチ用
+        window.addEventListener('scroll', () => {
+            const heroContainer = document.getElementById('appleHero');
+            const stepText = document.getElementById('stepText');
+            const stepLogo = document.getElementById('stepLogo');
+
+            if (!heroContainer || !stepText || !stepLogo) return;
+
+            const rect = heroContainer.getBoundingClientRect();
+            const containerHeight = heroContainer.offsetHeight - window.innerHeight;
+
+            // スクロール進捗率（0.0 ～ 1.0）
+            let progress = -rect.top / containerHeight;
+            progress = Math.max(0, Math.min(1, progress));
+
+            // ----------------------------------------------------
+            // フェーズ1: テーマテキスト（progress: 0.0 ～ 0.45）
+            // ----------------------------------------------------
+            if (progress <= 0.45) {
+                const textProgress = progress / 0.45;
+
+                const textScale = 1 + textProgress * 0.8;
+                const textOpacity = 1 - textProgress * 1.2;
+
+                // 中央位置 (-50%, -50%) を維持しながら拡大
+                stepText.style.transform = `translate(-50%, -50%) scale(${Math.max(1, textScale)})`;
+                stepText.style.opacity = Math.max(0, textOpacity);
+                stepText.style.pointerEvents = 'auto';
+            } else {
+                stepText.style.opacity = 0;
+                stepText.style.pointerEvents = 'none';
+            }
+
+            // ----------------------------------------------------
+            // フェーズ2: ロゴ（progress: 0.35 ～ 1.0）
+            // ----------------------------------------------------
+            if (progress > 0.35) {
+                const logoProgress = (progress - 0.35) / 0.65;
+
+                let logoScale, logoOpacity;
+
+                if (logoProgress < 0.5) {
+                    // 前半：ズームインしながら出現
+                    const inProgress = logoProgress / 0.5;
+                    logoScale = 0.8 + inProgress * 0.2;
+                    logoOpacity = inProgress * 1.5;
+                } else {
+                    // 後半：さらにズームインしながら消失
+                    const outProgress = (logoProgress - 0.5) / 0.5;
+                    logoScale = 1.0 + outProgress * 0.6;
+                    logoOpacity = 1 - outProgress * 1.3;
+                }
+
+                // 中央位置 (-50%, -50%) を維持しながら拡大
+                stepLogo.style.transform = `translate(-50%, -50%) scale(${logoScale})`;
+                stepLogo.style.opacity = Math.max(0, Math.min(1, logoOpacity));
+            } else {
+                stepLogo.style.opacity = 0;
+                stepLogo.style.transform = 'translate(-50%, -50%) scale(0.8)';
+            }
+        });
+
+        // 企業ロゴ用
+        async function createLogoTracks() {
+            try {
+                const response = await fetch("./scripts/companies.json");
+
+                if (!response.ok) {
+                    throw new Error("企業データの取得に失敗しました");
+                }
+
+                const companies = await response.json();
+
+                createTrack("logoTrack1", companies);
+                createTrack("logoTrack2", companies);
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+
+        function createTrack(trackId, companies) {
+
+            const track = document.getElementById(trackId);
+
+            if (!track || !Array.isArray(companies) || companies.length === 0) {
+                return;
+            }
+
+            // 表示領域の幅
+            const containerWidth = track.parentElement.offsetWidth;
+
+            // 少なくとも表示領域の2倍程度を埋める
+            const requiredWidth = containerWidth * 2;
+
+            // 異常なデータやレイアウト時の無限増殖を防ぐ
+            const maxSets = 8;
+            let setCount = 0;
+
+            track.innerHTML = "";
+
+            while (track.scrollWidth < requiredWidth && setCount < maxSets) {
+                const set = document.createDocumentFragment();
+
+                companies.forEach(company => {
+
+                    const link = document.createElement("a");
+
+                    link.href =
+                        `./company.html?id=${encodeURIComponent(company.id)}`;
+
+                    link.className = "company-logo-link";
+
+                    const img = document.createElement("img");
+
+                    img.src = company.image;
+                    img.alt = `${company.name} ロゴ`;
+
+                    link.appendChild(img);
+                    set.appendChild(link);
+                });
+
+                track.appendChild(set);
+                setCount++;
+            }
+
+            if (track.scrollWidth === 0) {
+                return;
+            }
+
+            // シームレス化
+            track.innerHTML += track.innerHTML;
+        }
+        createLogoTracks();
+    </script>
+</body>
+
+</html>

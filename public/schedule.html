@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="第61回 松江高専 高専祭の開催日程とイベントスケジュールを確認できます。">
+    <meta property="og:title" content="スケジュール | 松江高専 高専祭">
+    <meta property="og:description" content="第61回 松江高専 高専祭の開催日程とイベントスケジュールを確認できます。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/schedule.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <title>スケジュール</title>
+
+    <style>
+        /* ==========================
+   Schedule Page
+========================== */
+
+        .schedule-page {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        .schedule-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .schedule-tabs button {
+            flex: 1;
+            border: none;
+            border-radius: 999px;
+            padding: 12px;
+
+            font-size: 1rem;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            background: #ddd;
+        }
+
+        .schedule-tabs button.active {
+            background: #1aa4e8;
+            color: #fff;
+        }
+
+        /* タイムテーブル */
+
+        .schedule-board {
+            --schedule-row-height: 72px;
+            --schedule-header-height: 78px;
+            --schedule-time-width: 60px;
+            --schedule-time-offset: 12px;
+
+            background: #8fd0ee;
+            border-radius: 32px;
+            padding: 16px 16px 18px;
+        }
+
+        .schedule-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .schedule-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        /* 時間列 */
+
+        .schedule-times {
+            position: relative;
+            width: var(--schedule-time-width);
+            height: calc((19 - 9 + 1) * var(--schedule-row-height));
+            margin-top: var(--schedule-header-height);
+            box-sizing: border-box;
+        }
+
+        .schedule-hour {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #1aa4e8;
+            color: white;
+
+            border-radius: 50%;
+            border: 2px solid white;
+
+            font-size: 1.2rem;
+            font-weight: bold;
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+        }
+
+        /* メイン */
+
+        .schedule-main {
+            flex: 1;
+
+            background: white;
+
+            border: 2px solid #18354a;
+
+            border-radius: 32px;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .schedule-header {
+            height: var(--schedule-header-height);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 10px;
+            box-sizing: border-box;
+        }
+
+        .schedule-place {
+            padding: 12px 20px;
+
+            border-radius: 14px;
+
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .schedule-place.gym {
+            background: #f7b58f;
+        }
+
+        .schedule-place.garden {
+            background: #aad494;
+        }
+
+        .schedule-grid {
+            position: relative;
+            padding-bottom: 6px;
+        }
+
+        .schedule-row {
+            height: var(--schedule-row-height);
+            border-top: 2px solid #222;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .schedule-row::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            top: 50%;
+
+            border-top: 1px dashed #555;
+        }
+
+        /* イベント */
+
+        .schedule-event {
+            position: absolute;
+
+            left: 12px;
+            right: 12px;
+
+            border-radius: 14px;
+
+            padding: 8px 10px;
+
+            color: white;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.3;
+            font-size: 0.96rem;
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+
+            z-index: 10;
+        }
+
+        .schedule-event.gym {
+            background: #ff9966;
+        }
+
+        .schedule-event.garden {
+            background: #5ebd6c;
+        }
+
+        .event-detail {
+            margin: 18px auto;
+            padding: 16px;
+            max-width: 760px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .event-detail h3 {
+            margin: 0 0 8px;
+        }
+
+        .event-detail .event-meta {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        .event-detail p {
+            margin: 0 0 12px;
+            color: #273043;
+        }
+
+        .btn-close {
+            display: inline-block;
+            padding: 8px 12px;
+            background: #1aa4e8;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main class="schedule-page">
+        <h2>スケジュール</h2>
+
+        <div class="schedule-tabs">
+            <button class="schedule-day-tab active" data-day="1">
+                1日目
+            </button>
+
+            <button class="schedule-day-tab" data-day="2">
+                2日目
+            </button>
+        </div>
+
+        <div class="schedule-tabs">
+            <button class="schedule-place-tab active" data-place="gym">
+                体育館
+            </button>
+
+            <button class="schedule-place-tab" data-place="garden">
+                学びの庭
+            </button>
+        </div>
+
+        <div id="schedule-view"></div>
+
+    </main>
+    <script>
+
+       const EVENTS = [
+
+            {
+                id: "event-0",
+                day: 1,
+                place: "gym",
+                title: "ゲストライブ",
+                start: 11,
+                end: 12,
+                href: "./event.html",
+            },
+            {
+                id: "event-1",
+                day: 1,
+                place: "gym",
+                title: "吹奏楽部コンサート",
+                start: 13,
+                end: 14,
+                href: "./event.html",
+            },
+            {
+                id: "event-2",
+                day: 1,
+                place: "gym",
+                title: "学生ライブ",
+                start: 15,
+                end: 19,
+                href: "./event.html",
+            },
+            {
+                id: "event-6",
+                day: 2,
+                place: "gym",
+                title: "カラオケ大会",
+                start: 10,
+                end: 11,
+                href: "./event.html",
+            },
+            {
+                id: "event-7",
+                day: 2,
+                place: "gym",
+                title: "ダンス有志ステージ",
+                start: 11,
+                end: 13,
+                href: "./event.html",
+            },
+            {
+                id: "event-11",
+                day: 2,
+                place: "gym",
+                title: "抽選会　(※学生のみ参加可)",
+                start: 16,
+                end: 19,
+                href: "./event.html",
+            },
+            {
+                id: "event-12",
+                day: 1,
+                place: "garden",
+                title: "模擬店紹介",
+                start: 10,
+                end: 11,
+                href: "./event.html",
+            },
+            {
+                id: "event-3",
+                day: 1,
+                place: "garden",
+                title: "大食い大会",
+                start: 12,
+                end: 13,
+                href: "./event.html",
+            },
+            {
+                id: "event-4",
+                day: 2,
+                place: "gym",
+                title: "フィジーク",
+                start: 14,
+                end: 15,
+                href: "./event.html",
+            },
+            {
+                id: "event-5",
+                day: 1,
+                place: "garden",
+                title: "クイズ大会",
+                start: 14,
+                end: 15,
+                href: "./event.html",
+            },
+            {
+                id: "event-8",
+                day: 2,
+                place: "garden",
+                title: "書道パフォーマンス",
+                start: 9,
+                end: 10,
+                href: "./event.html",
+            },
+            {
+                id: "event-9",
+                day: 2,
+                place: "garden",
+                title: "アベトーーク！",
+                start: 11,
+                end: 12,
+                href: "./event.html",
+            },
+            {
+                id: "event-10",
+                day: 2,
+                place: "garden",
+                title: "腕相撲大会",
+                start: 13,
+                end: 14,
+                href: "./event.html",
+            }
+
+        ];
+
+        let currentDay = 1;
+        let currentPlace = "gym";
+
+        document.querySelectorAll(".schedule-day-tab").forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                document
+                    .querySelectorAll(".schedule-day-tab")
+                    .forEach(b => b.classList.remove("active"));
+
+                button.classList.add("active");
+
+                currentDay = Number(button.dataset.day);
+
+                render();
+            });
+
+        });
+
+        document.querySelectorAll(".schedule-place-tab").forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                document
+                    .querySelectorAll(".schedule-place-tab")
+                    .forEach(b => b.classList.remove("active"));
+
+                button.classList.add("active");
+
+                currentPlace = button.dataset.place;
+
+                render();
+            });
+
+        });
+
+        const ROW_HEIGHT = 72;
+        const START_HOUR = 9;
+        const EVENT_GAP = 8;
+
+        function render() {
+
+
+
+            const view =
+                document.getElementById("schedule-view");
+
+            const placeName =
+                currentPlace === "gym"
+                    ? "体育館"
+                    : "学びの庭";
+
+            let html = `
+<div class="schedule-board">
+
+    <div class="schedule-title">
+        ${currentDay}日目
+    </div>
+
+    <div class="schedule-layout">
+
+        <div class="schedule-times">
+`;
+
+            for (let i = START_HOUR; i <= 19; i++) {
+                const index = i - START_HOUR;
+
+                html += `
+        <div class="schedule-hour" style="top:${index * ROW_HEIGHT}px;">
+            ${i}
+        </div>
+    `;
+            }
+
+            html += `
+        </div>
+
+        <div class="schedule-main">
+
+            <div class="schedule-header">
+                <div class="schedule-place ${currentPlace}">
+                    ${placeName}
+                </div>
+            </div>
+
+            <div class="schedule-grid">
+`;
+
+            for (let i = START_HOUR; i <= 19; i++) {
+
+                html += `<div class="schedule-row"></div>`;
+            }
+
+            const filtered =
+                EVENTS.filter(event =>
+                    event.day === currentDay &&
+                    event.place === currentPlace
+                );
+
+            filtered.forEach(event => {
+
+                const top =
+                    (event.start - START_HOUR) * ROW_HEIGHT + EVENT_GAP / 2;
+
+                const height =
+                    (event.end - event.start) * ROW_HEIGHT - EVENT_GAP;
+
+                const hrefTarget = `./event.html?event=${encodeURIComponent(event.id || '')}`;
+
+                html += `
+            <a
+                href="${hrefTarget}"
+                class="schedule-event ${event.place}"
+                style="
+                    top:${top}px;
+                    height:${height}px;
+                "
+            >
+                ${event.title}
+            </a>
+        `;
+            });
+
+            html += `
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+            view.innerHTML = html;
+        }
+        // 補助: イベント詳細セクション生成（同じページ内リンク先）
+        function renderEventDetails() {
+            const container = document.getElementById('schedule-view');
+            if (!container) return;
+
+            let details = '<div id="event-details">';
+
+            EVENTS.forEach((event, idx) => {
+                details += `
+            <section id="event-${idx}" class="event-detail">
+                <h3>${event.title}</h3>
+                <div class="event-meta">${event.day}日目・${event.place}・${event.start}:00〜${event.end}:00</div>
+                <p>${event.description || ''}</p>
+                <a href="#schedule-view" class="btn-close">スケジュールに戻る</a>
+            </section>
+        `;
+            });
+
+            details += '</div>';
+
+            container.insertAdjacentHTML('beforeend', details);
+        }
+
+        // 初回描画後に詳細を追加
+        render();
+        //renderEventDetails();
+    </script>
+
+        <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

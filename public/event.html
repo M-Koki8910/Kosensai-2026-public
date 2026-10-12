@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="第61回 松江高専 高専祭で開催されるイベントの内容や日時を紹介します。">
+    <meta property="og:title" content="イベント紹介 | 松江高専 高専祭">
+    <meta property="og:description" content="第61回 松江高専 高専祭で開催されるイベントの内容や日時を紹介します。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/event.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <script src="./scripts/script.js" defer></script>
+    <title>イベント紹介</title>
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <section class="container-section shop-page">
+
+        <h2>ステージイベント</h2>
+
+        <div class="grid" id="event-grid">
+            <!-- JavaScriptで動的に生成 -->
+        </div>
+
+        <!-- イベント詳細モーダル -->
+        <div class="modal" id="eventModal">
+
+            <div class="modal-content">
+
+                <span class="close" id="eventModalClose">&times;</span>
+
+                <img id="eventModalImage" class="modal-image" src="" alt="">
+
+                <div class="modal-body">
+
+                    <h2 id="eventModalTitle"></h2>
+
+                    <p class="modal-product">
+                        <strong>内容：</strong>
+                        <span id="eventModalProduct"></span>
+                    </p>
+
+
+
+                    <p class="modal-description" id="eventModalDescription"></p>
+
+                    <div class="modal-meta-row">
+                        <div class="modal-time">
+                            <span class="modal-label">開催時間：</span>
+                            <span id="eventModalTime"></span>
+                        </div>
+                        <div class="modal-meta-links">
+                            <a id="eventModalScheduleLink" href="./schedule.html">
+                                スケジュールを見る
+                            </a>
+                        </div>
+
+                        <div class="modal-location">
+                            <span class="modal-label">開催場所：</span>
+                            <span id="eventModalLocation"></span>
+                        </div>
+                        <div class="modal-meta-links">
+                            <a id="eventModalMapLink" href="#">
+                                マップで確認する
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- <div class="modal-meta-links">
+                        <a id="eventModalScheduleLink" href="./schedule.html">
+                            スケジュールを見る
+                        </a>
+                        <a id="eventModalMapLink" href="#">
+                            マップで確認する
+                        </a>
+                    </div>
+ -->
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script>
+
+        const events = [
+
+            {
+                "id": "event-0",
+                "name": "ゲストライブ",
+                "image": "./images/guestlive.jpeg",
+                "product": "ゲストによる豪華ライブイベントです！",
+                "description": "今年のゲストをお迎えして、最高の時間をお楽しみください。",
+                "time": "11:00〜12:00",
+                "day": 1,
+                "map": "",
+                "location": "体育館"
+            },
+
+            {
+                "id": "event-1",
+                "name": "吹奏楽部コンサート",
+                "image": "./images/suibu.jpeg",
+                "product": "吹奏楽部によるスペシャルコンサート！",
+                "description": "吹奏楽部による演奏をお楽しみください！",
+                "time": "13:00〜14:00",
+                "day": 1,
+                "map": "",
+                "location": "体育館"
+            },
+
+            {
+                "id": "event-2",
+                "name": "学生ライブ",
+                "image": "./images/gakusei.jpeg",
+                "product": "バンド演奏を開催！",
+                "description": "学生による迫力のライブパフォーマンスをお楽しみください！",
+                "time": "15:00〜19:00",
+                "day": 1,
+                "map": "",
+                "location": "体育館"
+            },
+
+            {
+                "id": "event-3",
+                "name": "大食い大会",
+                "image": "./images/oogui.jpeg",
+                "product": "模擬店の食べ物をいち早く食べきれるのはいったい誰だ！？",
+                "description": "模擬店の食べ物を使った大食い大会です。誰が一番早く食べきるのか、ぜひご覧ください！",
+                "time": "12:00〜13:00",
+                "day": 1,
+                "map": "",
+                "location": "学びの庭"
+            },
+
+            {
+                "id": "event-4",
+                "name": "フィジーク",
+                "image": "./images/physique.jpeg",
+                "product": "若きボディビルダーの美ボディーをぜひご覧ください！",
+                "description": "鍛え上げられた身体を披露するパフォーマンスです。",
+                "time": "14:00〜15:00",
+                "day": 2,
+                "map": "",
+                "location": "体育館"
+            },
+
+            {
+                "id": "event-5",
+                "name": "クイズ大会",
+                "image": "./images/quiz.jpeg",
+                "product": "松江高専に関するクイズを多数出題！",
+                "description": "松江高専に関するさまざまなクイズに挑戦しよう！",
+                "time": "14:00〜15:00",
+                "day": 1,
+                "map": "",
+                "location": "学びの庭"
+            },
+
+            {
+                "id": "event-6",
+                "name": "カラオケ大会",
+                "image": "./images/karaoke.jpeg",
+                "product": "今年もカラオケ大会を開催します！",
+                "description": "学生たちが自慢の歌声を披露します！",
+                "time": "10:00〜11:00",
+                "day": 2,
+                "map": "",
+                "location": "体育館"
+            },
+
+            {
+                "id": "event-7",
+                "name": "ダンス有志ステージ",
+                "image": "./images/dance.jpeg",
+                "product": "キレのあるパフォーマンスをぜひご覧ください！",
+                "description": "ダンスサークルによる迫力のパフォーマンスをお楽しみください！",
+                "time": "11:00〜13:00",
+                "day": 2,
+                "map": "",
+                "location": "体育館"
+            },
+
+            {
+                "id": "event-8",
+                "name": "書道パフォーマンス",
+                "image": "./images/syodou.jpeg",
+                "product": "書道部によるパフォーマンスをぜひご覧ください！",
+                "description": "書道部による迫力ある書道パフォーマンスをお楽しみください！",
+                "time": "9:00〜10:00",
+                "day": 2,
+                "map": "",
+                "location": "学びの庭"
+            },
+            
+
+            {
+                "id": "event-9",
+                "name": "アベトーーク！",
+                "image": "./images/radio.jpeg",
+                "product": "学生会の会長がラジオ形式でトークを繰り広げます！",
+                "description": "模擬店フード片手にゆるく楽しくお過ごしください！",
+                "time": "11:00〜12:00",
+                "day": 2,
+                "map": "",
+                "location": "学びの庭"
+            },
+
+            {
+                "id": "event-10",
+                "name": "腕相撲大会",
+                "image": "./images/udezumou.jpeg",
+                "product": "パワー系高専生による腕相撲大会です！",
+                "description": "高専生たちによる熱い腕相撲対決をお楽しみください！",
+                "time": "13:00〜14:00",
+                "day": 2,
+                "map": "",
+                "location": "学びの庭"
+            },
+
+            {
+                "id": "event-11",
+                "name": "抽選会",
+                "image": "./images/lottery.jpeg",
+                "product": "豪華景品が盛りだくさん！（※学生のみ参加可能です）",
+                "description": "豪華景品が当たる抽選会を開催します！",
+                "time": "16:00〜19:00",
+                "day": 2,
+                "map": "",
+                "location": "体育館"
+            },
+
+            {
+                "id": "event-12",
+                "image": "./images/shop.jpeg",
+                "name": "模擬店紹介",
+                "product": "今年の模擬店の見どころを紹介します！",
+                "description": "様々な模擬店の魅力を知って、当日のお店選びに役立ててください。",
+                "time": "10:00〜11:00",
+                "day": 1,
+                "map": "",
+                "location": "学びの庭"
+            },
+
+            {
+                "id": "event-13",
+                "image": "./images/biblio.png",
+                "name": "ビブリオバトル",
+                "product": "好きな本の魅力をぶつけ合う、知的書評合戦です！",
+                "description": "みんなで語る魅力を通して、本の世界にダイブしよう！！",
+                "time": "10:00〜12:00",
+                "day": 2,
+                "map": "",
+                "location": "図書館"
+            }
+
+        ];
+
+        const eventGrid = document.getElementById('event-grid');
+
+        function parseEventStartMinutes(timeText) {
+            const match = String(timeText || '').match(/(\d{1,2}):(\d{2})/);
+            if (!match) return Number.MAX_SAFE_INTEGER;
+            return Number(match[1]) * 60 + Number(match[2]);
+        }
+
+        function createEventCard(event) {
+
+            const card = document.createElement('div');
+            card.className = 'card event-card';
+            card.dataset.eventLocation = event.location === '体育館'
+                ? 'gym'
+                : 'courtyard';
+
+            const productDisplay = event.product.length > 30
+                ? event.product.substring(0, 30) + '...'
+                : event.product;
+
+            card.innerHTML = `
+        <img src="${event.image}" alt="${event.name}">
+        <div class="card-body">
+            <h3>${event.name}</h3>
+        </div>
+        <div class="detail" title="${event.product}">
+            ${productDisplay}
+        </div>
+    `;
+
+            card.addEventListener('click', () => openEventModal(event));
+
+            return card;
+        }
+
+        function renderEventGroups() {
+            eventGrid.innerHTML = '';
+
+            const locationLabels = {
+                '体育館': '第一体育館',
+                '学びの庭': '学びの庭',
+                '図書館': '図書館'
+            };
+
+            [1, 2].forEach(day => {
+                const locationOrder = day === 2
+                    ? ['体育館', '学びの庭', '図書館']
+                    : ['体育館', '学びの庭'];
+                const section = document.createElement('section');
+                section.className = 'event-day-section';
+
+                const heading = document.createElement('h3');
+                heading.className = 'event-day-heading';
+                heading.textContent = `${day}日目`;
+                section.appendChild(heading);
+
+                locationOrder.forEach(location => {
+                    const locationEvents = events
+                        .filter(event => Number(event.day) === day && event.location === location)
+                        .sort((a, b) => parseEventStartMinutes(a.time) - parseEventStartMinutes(b.time));
+
+                    if (locationEvents.length === 0) return;
+
+                    const locationSection = document.createElement('section');
+                    locationSection.className = 'event-location-section';
+
+                    const locationHeading = document.createElement('h4');
+                    locationHeading.className = 'event-location-heading';
+                    locationHeading.textContent = locationLabels[location] || location;
+                    locationSection.appendChild(locationHeading);
+
+                    const group = document.createElement('div');
+                    group.className = 'grid event-day-grid';
+
+                    locationEvents.forEach(event => {
+                        group.appendChild(createEventCard(event));
+                    });
+
+                    locationSection.appendChild(group);
+                    section.appendChild(locationSection);
+                });
+
+                eventGrid.appendChild(section);
+            });
+        }
+
+        function scrollToEventLocation(locationKey) {
+            const locationCard = document.querySelector(
+                `[data-event-location="${locationKey}"]`
+            );
+            if (locationCard) {
+                locationCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        renderEventGroups();
+
+        const eventModal = document.getElementById('eventModal');
+
+        function syncEventUrl(eventId) {
+            const url = new URL(window.location.href);
+
+            if (eventId) {
+                url.searchParams.set('event', eventId);
+            } else {
+                url.searchParams.delete('event');
+            }
+
+            window.history.replaceState({}, '', url);
+        }
+
+        function openEventModal(event) {
+
+            document.getElementById('eventModalImage').src =
+                event.image;
+
+            document.getElementById('eventModalImage').alt =
+                event.name;
+
+            document.getElementById('eventModalTitle').textContent =
+                event.name;
+
+            document.getElementById('eventModalProduct').textContent =
+                event.product;
+
+            document.getElementById('eventModalTime').textContent =
+                event.time || '時間未定';
+
+            document.getElementById('eventModalDescription').textContent =
+                event.description;
+
+            document.getElementById('eventModalLocation').textContent =
+                event.location || '未定';
+
+            document.getElementById('eventModalMapLink').href =
+                `./map.html?map=${encodeURIComponent(event.map || '')}`;
+
+            document.getElementById('eventModalScheduleLink').href =
+                `./schedule.html?event=${encodeURIComponent(event.id)}`;
+
+            syncEventUrl(event.id);
+            eventModal.style.display = 'flex';
+        }
+
+        function closeEventModal() {
+            eventModal.style.display = 'none';
+            syncEventUrl(null);
+        }
+
+        // ×ボタンで閉じる
+        eventModalClose.addEventListener('click', () => {
+            closeEventModal();
+        });
+
+
+        // 背景クリックで閉じる
+        eventModal.addEventListener('click', (event) => {
+
+            if (event.target === eventModal) {
+                closeEventModal();
+            }
+
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && eventModal.style.display === 'flex') {
+                closeEventModal();
+            }
+        });
+
+        const initialEventId = new URLSearchParams(window.location.search).get('event');
+        const initialEvent = events.find((event) => event.id === initialEventId);
+        const initialLocation = new URLSearchParams(window.location.search).get('location');
+
+        if (initialEvent) {
+            openEventModal(initialEvent);
+        } else if (initialLocation) {
+            scrollToEventLocation(initialLocation);
+        }
+    </script>
+    <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

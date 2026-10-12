@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭で行われる学生や団体の展示内容を紹介します。">
+    <meta property="og:title" content="展示紹介 | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭で行われる学生や団体の展示内容を紹介します。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/exhibition.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/tweet.js"></script>
+    <script src="./scripts/script.js" defer></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+    <title>展示紹介</title>
+    <style>
+        .exhibition-page {
+            color: #1f2937;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef4f8 100%);
+            line-height: 1.8;
+        }
+
+        .exhibition-page *,
+        .exhibition-page *::before,
+        .exhibition-page *::after {
+            box-sizing: border-box;
+        }
+
+        .exhibition-hero {
+            padding: 90px 20px 70px;
+            color: #fff;
+            background: linear-gradient(135deg, #0f172a 0%, #0f766e 100%);
+        }
+
+        .exhibition-hero-inner,
+        .exhibition-section {
+            width: min(100%, 1100px);
+            margin: 0 auto;
+        }
+
+        .exhibition-hero-inner {
+            text-align: center;
+        }
+
+        .exhibition-eyebrow {
+            margin: 0 0 18px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+        }
+
+        .exhibition-hero h1 {
+            margin: 0 0 16px;
+            font-size: clamp(2.1rem, 4vw, 3.2rem);
+            line-height: 1.3;
+        }
+
+        .exhibition-lead {
+            max-width: 760px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.08rem;
+        }
+
+        .exhibition-section {
+            padding: 72px 20px;
+        }
+
+        .exhibition-section + .exhibition-section {
+            padding-top: 0;
+        }
+
+        .exhibition-heading {
+            margin-bottom: 24px;
+        }
+
+        .exhibition-heading h2 {
+            margin: 0;
+            color: #0f172a;
+            font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+            line-height: 1.4;
+        }
+
+        .exhibition-heading p {
+            margin: 8px 0 0;
+            color: #64748b;
+        }
+
+        .exhibition-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .exhibition-card {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+        }
+
+        button.exhibition-card {
+            width: 100%;
+            color: inherit;
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button.exhibition-card:hover,
+        button.exhibition-card:focus-visible {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+        }
+
+        .exhibition-card h3 {
+            margin: 0 0 12px;
+            color: #0f766e;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+
+        .exhibition-card h4 {
+            margin: 18px 0 4px;
+            color: #334155;
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
+        }
+
+        .exhibition-card p {
+            margin: 0;
+            color: #475569;
+        }
+
+        .exhibition-card > img {
+            display: block;
+            width: 100%;
+            max-height: 180px;
+            margin: 0 0 18px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .exhibition-card strong {
+            color: #0f766e;
+        }
+
+        .exhibition-feature {
+            background: linear-gradient(135deg, #ecfeff 0%, #ffffff 100%);
+            border-color: rgba(13, 148, 136, 0.22);
+        }
+
+        .company-exhibition-card {
+            display: grid;
+            gap: 8px;
+        }
+
+        .company-exhibition-card h3 {
+            margin-bottom: 0;
+        }
+
+        .company-exhibition-card .company-note {
+            margin-top: 6px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .exhibition-empty {
+            grid-column: 1 / -1;
+            padding: 24px;
+            color: #64748b;
+            background: #fff;
+            border-radius: 18px;
+        }
+
+        @media (max-width: 700px) {
+            .exhibition-hero {
+                padding-top: 72px;
+            }
+
+            .exhibition-section {
+                padding: 58px 16px;
+            }
+
+            .exhibition-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .exhibition-card {
+                padding: 20px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+                    <li><a href="./exhibition.html">展示紹介</a></li>
+                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main class="exhibition-page">
+        
+
+        <section class="exhibition-section">
+            <div class="exhibition-heading">
+                <h2>ワクワク！学科体験</h2>
+                <p>5学科それぞれの学びを、楽しい体験を通して紹介します。</p>
+            </div>
+            <div id="department-exhibition-grid" class="exhibition-grid"></div>
+        </section>
+
+        <section class="exhibition-section">
+            <div class="exhibition-heading">
+                <h2>ひらめき！コンテスト体験</h2>
+                <p>学生たちが挑戦している、技術とアイデアの成果を紹介します。</p>
+            </div>
+            <div id="contest-exhibition-grid" class="exhibition-grid"></div>
+        </section>
+
+        <section class="exhibition-section">
+            <div class="exhibition-heading">
+                <h2>企業展示</h2>
+                <p>高専生の学びと社会の仕事がつながる、企業の展示・体験ブースです。</p>
+            </div>
+            <div id="company-exhibition-grid" class="exhibition-grid">
+              
+            </div>
+        </section>
+
+        <section class="exhibition-section">
+            <div class="exhibition-heading">
+                <h2>トヨタソーシャルフェス</h2>
+            </div>
+            <article class="exhibition-card exhibition-feature">
+                <h3>地域の未来を考える体験</h3>
+                <img src="./images/toyota.png" alt="トヨタソーシャルフェスの展示画像">
+                <h4>できること</h4>
+                <p>身近な地域や環境について考えながら、楽しんで参加できる体験型の企画です。展示や体験を通して、よりよい未来のためにできることを一緒に考えてみましょう。</p>
+            </article>
+        </section>
+    </main>
+
+    <div class="shop-modal" id="exhibition-modal" aria-hidden="true">
+        <div class="shop-modal-panel" role="dialog" aria-modal="true" aria-labelledby="exhibition-modal-title">
+            <button class="shop-modal-close" id="exhibition-modal-close" type="button" aria-label="閉じる">&times;</button>
+            <img id="exhibition-modal-image" class="shop-modal-image" src="./images/noimage.png" alt="">
+            <div class="shop-modal-body">
+                <p class="shop-modal-tag" id="exhibition-modal-tag">展示紹介</p>
+                <h3 id="exhibition-modal-title">展示名</h3>
+                <p class="shop-modal-product">
+                    <strong>内容：</strong>
+                    <span id="exhibition-modal-product">-</span>
+                </p>
+                <p class="shop-modal-description" id="exhibition-modal-description">説明を読み込み中です。</p>
+                <div class="shop-modal-location">
+                    <div class="shop-modal-location-row">
+                        <strong>展示場所：</strong>
+                        <span id="exhibition-modal-location">-</span>
+                    </div>
+                    <a id="exhibition-modal-map-link" href="./map.html">マップで確認する</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-legal">
+            <a href="./privacy.html">プライバシーポリシー</a>
+            <span aria-hidden="true">|</span>
+            <a href="./contact.html">お問い合わせ</a>
+            <span aria-hidden="true">|</span>
+            <a href="./disclaimer.html">免責事項</a>
+            <span aria-hidden="true">|</span>
+            <a href="./copyright.html">著作権について</a>
+        </div>
+        <div class="footer-bottom">
+            <p>2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+    <script>
+        const noImage = './images/noimage.png';
+        const departmentExhibitions = [
+            {
+                id: 'department-mechanical',
+                title: '機械工学科',
+                image: './images/m.jpg',
+                product: '',
+                description: '',
+                location: '校舎1階 展示ブース',
+                map: 'building1f'
+            },
+            {
+                id: 'department-electrical',
+                title: '電気情報工学科',
+                image: './images/e.jpg',
+                product: '',
+                description: '',
+                location: '校舎1階 展示ブース',
+                map: 'building1f'
+            },
+            {
+                id: 'department-electronic-control',
+                title: '電子制御学科',
+                image: './images/d.jpg',
+                product: '',
+                description: '',
+                location: '校舎3階 展示ブース',
+                map: 'building3f'
+            },
+            {
+                id: 'department-information',
+                title: '情報工学科',
+                image: './images/j.jpg',
+                product: '',
+                description: '',
+                location: '校舎2階 展示ブース',
+                map: 'building2f'
+            },
+            {
+                id: 'department-environmental',
+                title: '環境・建設工学科',
+                image: './images/c.jpg',
+                product: '',
+                description: '',
+                location: '校舎2階 展示ブース',
+                map: 'building2f'
+            }
+            
+        ];
+
+        const contestExhibitions = [
+            {
+                id: 'contest-robot',
+                title: 'ロボットコンテスト',
+                image: './images/noimage.png',
+                product: '実際のロボットを間近で見て、機構や動きを楽しめます。',
+                description: '学生がチームでロボットを設計・製作し、アイデアと技術を競うコンテストです。',
+                location: '体育館',
+                map: 'campus'
+            },
+            {
+                id: 'contest-programming',
+                title: 'プログラミングコンテスト',
+                image: './images/noimage.png',
+                product: '学生が開発したアプリやシステムを操作できます。',
+                description: 'コンピュータを活用して、社会の課題を解決する作品を生み出すコンテストです。',
+                location: '校舎2階 展示ブース',
+                map: 'building2f'
+            },
+            {
+                id: 'contest-design',
+                title: 'デザインコンテスト',
+                image: './images/noimage.png',
+                product: '作品を見ながら、制作の工夫や発想を楽しめます。',
+                description: '設計やデザインの力を活かして制作した、学生たちの創造的な作品を展示します。',
+                location: '校舎3階 展示ブース',
+                map: 'building3f'
+            },
+            {
+                id: 'contest-rescue',
+                title: 'レスキューコンテスト',
+                image: './images/noimage.png',
+                product: '作品を見ながら、制作の工夫や発想を楽しめます。',
+                description: '設計やデザインの力を活かして制作した、学生たちの創造的な作品を展示します。',
+                location: '校舎3階 展示ブース',
+                map: 'building3f'
+            },
+            {
+                id: 'contest-ecoran',
+                title: 'エコラン',
+                image: './images/noimage.png',
+                product: '作品を見ながら、制作の工夫や発想を楽しめます。',
+                description: '設計やデザインの力を活かして制作した、学生たちの創造的な作品を展示します。',
+                location: '校舎3階 展示ブース',
+                map: 'building3f'
+            }
+        ];
+
+        const modal = document.getElementById('exhibition-modal');
+        const modalImage = document.getElementById('exhibition-modal-image');
+        const modalTitle = document.getElementById('exhibition-modal-title');
+        const modalProduct = document.getElementById('exhibition-modal-product');
+        const modalDescription = document.getElementById('exhibition-modal-description');
+        const modalLocation = document.getElementById('exhibition-modal-location');
+        const modalMapLink = document.getElementById('exhibition-modal-map-link');
+        const modalTag = document.getElementById('exhibition-modal-tag');
+
+        function openExhibitionModal(exhibition) {
+            modalTag.textContent = exhibition.tag || '展示紹介';
+            modalTitle.textContent = exhibition.title;
+            modalProduct.textContent = exhibition.product;
+            modalDescription.textContent = exhibition.description;
+            modalLocation.textContent = exhibition.location;
+            modalImage.src = exhibition.image || noImage;
+            modalImage.alt = `${exhibition.title}の展示画像`;
+            modalMapLink.href = `./map.html?map=${encodeURIComponent(exhibition.map)}`;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeExhibitionModal() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+        }
+
+        function syncExhibitionUrl(exhibitionId) {
+            const url = new URL(window.location.href);
+            if (exhibitionId) {
+                url.searchParams.set('exhibition', exhibitionId);
+            } else {
+                url.searchParams.delete('exhibition');
+            }
+            window.history.replaceState({}, '', url);
+        }
+
+        function createExhibitionCard(exhibition, tag) {
+            const card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'exhibition-card exhibition-feature';
+            card.id = exhibition.id || '';
+            card.innerHTML = `<h3>${escapeHtml(exhibition.title)}</h3><p>${escapeHtml(exhibition.product)}</p>`;
+            card.addEventListener('click', () => {
+                const selectedExhibition = { ...exhibition, tag };
+                syncExhibitionUrl(selectedExhibition.id);
+                openExhibitionModal(selectedExhibition);
+            });
+            return card;
+        }
+
+        function renderExhibitions() {
+            const departmentGrid = document.getElementById('department-exhibition-grid');
+            const contestGrid = document.getElementById('contest-exhibition-grid');
+            departmentExhibitions.forEach(item => departmentGrid.appendChild(createExhibitionCard(item, '学科展示')));
+            contestExhibitions.forEach(item => contestGrid.appendChild(createExhibitionCard(item, 'コンテスト展示')));
+        }
+
+        async function loadExhibitionCompanies() {
+            const grid = document.getElementById('company-exhibition-grid');
+
+            try {
+                const response = await fetch('./scripts/companies.json');
+                if (!response.ok) {
+                    throw new Error('企業情報の取得に失敗しました');
+                }
+
+                const companies = await response.json();
+                const exhibitionCompanies = companies.filter(company => company.exhibition === true);
+
+                if (exhibitionCompanies.length === 0) {
+                    grid.innerHTML = '<p class="exhibition-empty">企業展示の情報は準備中です。</p>';
+                    return;
+                }
+
+                exhibitionCompanies.forEach(company => {
+                    const card = createExhibitionCard({
+                        title: company.name || '企業名未定',
+                        image: company.image || noImage,
+                        product: company.note || '企業ブースで展示や体験をお楽しみいただけます。',
+                        description: company.description || '企業紹介をお楽しみください。',
+                        location: company.location || '企業展示ブース',
+                        map: company.map || 'campus'
+                    }, '企業展示');
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                grid.innerHTML = '<p class="exhibition-empty">企業展示の情報を読み込めませんでした。</p>';
+            }
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        document.getElementById('exhibition-modal-close').addEventListener('click', closeExhibitionModal);
+        modal.addEventListener('click', event => {
+            if (event.target === modal) {
+                closeExhibitionModal();
+            }
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && modal.classList.contains('open')) {
+                closeExhibitionModal();
+            }
+        });
+
+        renderExhibitions();
+        loadExhibitionCompanies();
+
+        const initialExhibitionId = new URLSearchParams(window.location.search).get('exhibition');
+        const initialExhibition = [...departmentExhibitions, ...contestExhibitions]
+            .find(exhibition => exhibition.id === initialExhibitionId);
+        if (initialExhibition) {
+            openExhibitionModal(initialExhibition);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="松江高専 高専祭特設WEBページの運営者情報やサイトに関する情報を掲載しています。">
+    <meta property="og:title" content="このサイトについて | 松江高専 高専祭">
+    <meta property="og:description" content="松江高専 高専祭特設WEBページの運営者情報やサイトに関する情報を掲載しています。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/aboutme.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <title>このサイトについて</title>
+    <style>
+        .aboutme {
+            width: 100%;
+            color: #1f2937;
+            background: linear-gradient(180deg, #f8fafc 0%, #eef4f8 100%);
+            line-height: 1.8;
+        }
+
+        .aboutme *,
+        .aboutme *::before,
+        .aboutme *::after {
+            box-sizing: border-box;
+        }
+
+        .aboutme h1,
+        .aboutme h2,
+        .aboutme h3,
+        .aboutme p,
+        .aboutme ul {
+            margin-top: 0;
+        }
+
+        .aboutme p,
+        .aboutme ul {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .aboutme-hero {
+            padding: 90px 20px 70px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #fff;
+        }
+
+        .aboutme-hero-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .aboutme-eyebrow {
+            margin-bottom: 18px;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.18em;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .aboutme-hero h1 {
+            margin-bottom: 16px;
+            font-size: clamp(2.1rem, 4vw, 3.2rem);
+            line-height: 1.3;
+            font-weight: 800;
+        }
+
+        .aboutme-lead {
+            max-width: 760px;
+            margin: 0 auto;
+            font-size: 1.08rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .aboutme-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 72px 20px;
+        }
+
+        .aboutme-page.aboutme-muted {
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        .aboutme-heading {
+            margin-bottom: 32px;
+        }
+
+        .aboutme-label {
+            margin-bottom: 8px;
+            color: #1e3a8a;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+        }
+
+        .aboutme-heading h2 {
+            margin: 0;
+            font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+            line-height: 1.4;
+            color: #0f172a;
+        }
+
+        .aboutme-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .aboutme-card {
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 18px;
+            padding: 26px 24px;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+        }
+
+        .aboutme-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+            color: #1e3a8a;
+        }
+
+        .aboutme-card p {
+            margin-bottom: 0;
+            color: #475569;
+        }
+
+        .aboutme-card.aboutme-highlight {
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .aboutme-note {
+            margin-top: 28px;
+            padding: 24px 26px;
+            border-left: 5px solid #1e3a8a;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .aboutme-note h3 {
+            margin-bottom: 10px;
+            color: #1e3a8a;
+        }
+
+        .aboutme-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 12px;
+        }
+
+        .aboutme-list li {
+            position: relative;
+            padding: 14px 18px 14px 46px;
+            background: #fff;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 12px;
+            color: #334155;
+        }
+
+        .aboutme-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 18px;
+            top: 12px;
+            color: #1e3a8a;
+            font-weight: 800;
+        }
+
+        .aboutme-cta {
+            margin-top: 30px;
+            padding: 26px 24px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            border-radius: 18px;
+            color: #fff;
+            box-shadow: 0 16px 30px rgba(30, 58, 138, 0.18);
+        }
+
+        .aboutme-cta strong {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        @media (max-width: 700px) {
+            .aboutme-hero {
+                padding-top: 72px;
+            }
+
+            .aboutme-page {
+                padding: 58px 16px;
+            }
+
+            .aboutme-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .aboutme-card,
+            .aboutme-note,
+            .aboutme-cta {
+                padding: 20px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+                    <li><a href="./exhibition.html">展示紹介</a></li>
+                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main class="aboutme">
+        <section class="aboutme-hero">
+            <div class="aboutme-hero-inner">
+                <p class="aboutme-eyebrow">ABOUT THIS SITE</p>
+                <h1>このサイトについて</h1>
+                <p class="aboutme-lead">
+                    高専祭の情報を、見やすく・わかりやすく・もっと楽しめる形で届けるために作られたWebサイトです。
+                </p>
+            </div>
+        </section>
+
+        <section class="aboutme-page">
+            <div class="aboutme-heading">
+                <p class="aboutme-label">01</p>
+                <h2>サイトの役割</h2>
+            </div>
+
+            <div class="aboutme-grid">
+                <article class="aboutme-card aboutme-highlight">
+                    <h3>情報を見つけやすくする</h3>
+                    <p>
+                        高専祭に関するイベント情報、アクセス情報、会場の流れを、必要なときにすぐ確認できるように整理しています。
+                    </p>
+                </article>
+
+                <article class="aboutme-card">
+                    <h3>来場者が使いやすいようにする</h3>
+                    <p>
+                        スマートフォンでも見やすいレイアウトを意識し、移動や参加を考えた導線で構成しています。
+                    </p>
+                </article>
+
+                <article class="aboutme-card">
+                    <h3>体験を増やす</h3>
+                    <p>
+                        単なる案内ではなく、スタンプラリーやイベント紹介など、参加体験が生まれるコンテンツを取り入れています。
+                    </p>
+                </article>
+
+                <article class="aboutme-card">
+                    <h3>情報の伝わり方を大切にする</h3>
+                    <p>
+                        難しすぎない表現とシンプルな見た目を心がけ、誰でも安心して使えるページを目指しました。
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="aboutme-page aboutme-muted">
+            <div class="aboutme-heading">
+                <p class="aboutme-label">02</p>
+                <h2>使っている技術</h2>
+            </div>
+
+            <div class="aboutme-grid">
+                <article class="aboutme-card">
+                    <h3>HTML</h3>
+                    <p>ページの全体構造を作り、文章や見出し、リンク、画像を整理して配置しています。</p>
+                </article>
+
+                <article class="aboutme-card">
+                    <h3>CSS</h3>
+                    <p>見た目の統一感や余白、レスポンシブ対応を行い、伝わりやすいレイアウトを整えています。</p>
+                </article>
+
+                <article class="aboutme-card">
+                    <h3>JavaScript</h3>
+                    <p>ページに動きをつけたり、情報の切り替えを行ったりすることで、より体験的なサイトにしています。</p>
+                </article>
+
+                <article class="aboutme-card">
+                    <h3>サーバー</h3>
+                    <p>公開環境で動くようにし、さまざまな機能やデータのやり取りを実際に動かせる形にしています。</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="aboutme-page">
+            <div class="aboutme-heading">
+                <p class="aboutme-label">03</p>
+                <h2>制作の意図</h2>
+            </div>
+
+            <p>
+                高専祭には多くの来場者が訪れます。そのときに必要になるのは、ただ情報が載っていることではなく、「どこを見ればいいか」「どこに行けばいいか」をすぐに理解できることです。
+            </p>
+
+            <p>
+                そのため、このサイトでは、見た目を派手にしすぎず、情報の見やすさと使いやすさを優先して構成しました。必要な情報にたどり着きやすくし、安心して閲覧できるようにすることを大切にしています。
+            </p>
+
+            <div class="aboutme-note">
+                <h3>重要なのは「見やすさ」</h3>
+                <p>
+                    企画や情報が多くなるほど、ユーザーが迷いやすくなります。だからこそ、余白を確保し、見出しを整理し、必要な要素をシンプルに並べることが大切です。
+                </p>
+            </div>
+        </section>
+
+        <section class="aboutme-page aboutme-muted">
+            <div class="aboutme-heading">
+                <p class="aboutme-label">04</p>
+                <h2>このサイトが目指しているもの</h2>
+            </div>
+
+            <ul class="aboutme-list">
+                <li>来場者が迷わず情報を見つけられること</li>
+                <li>学校の魅力やイベントの雰囲気を自然に伝えること</li>
+                <li>モバイルでも快適に閲覧できること</li>
+                <li>次の人が改修しやすい構造にすること</li>
+            </ul>
+
+            <div class="aboutme-cta">
+                <strong>「作る」ことの価値</strong>
+                <p>このサイトは、学校のイベントをよりよく伝えるための手段でもあり、技術を使って人に届く形にするための一歩です。</p>
+            </div>
+        </section>
+    </main>
+
+        <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

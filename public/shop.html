@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="第61回 松江高専 高専祭に出店する模擬店の情報を紹介します。">
+    <meta property="og:title" content="模擬店紹介 | 松江高専 高専祭">
+    <meta property="og:description" content="第61回 松江高専 高専祭に出店する模擬店の情報を紹介します。">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+    <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/shop.html">
+    <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/tweet.js"></script>
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <title>模擬店紹介</title>
+
+</head>
+
+<body>
+    <div class="topbar">
+        <a href="./index.html" class="home-link">
+            <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+        </a>
+        <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+    </div>
+
+    <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <div class="container-section shop-page">
+        <h2>模擬店</h2>
+        <div class="shop-grid-wrap">
+            <h3 class="shop-category-title">食べ物模擬店</h3>
+            <div class="shop-tab-grid" id="foodShopTabs" aria-live="polite"></div>
+            <h3 class="shop-category-title">体験型模擬店</h3>
+            <div class="shop-tab-grid" id="experienceShopTabs" aria-live="polite"></div>
+        </div>
+
+    </div>
+
+
+    <div class="shop-modal" id="shopModal" aria-hidden="true">
+        <div class="shop-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="shop-modal-close" type="button" aria-label="閉じる">&times;</button>
+
+            <img id="modalImage" class="shop-modal-image" src="./images/shop.jpg" alt="">
+
+            <div class="shop-modal-body">
+                <p class="shop-modal-tag">団体紹介</p>
+
+                <h3 id="modalTitle">団体名</h3>
+
+                <p class="shop-modal-product">
+                    <strong>内容：</strong>
+                    <span id="modalProduct">-</span>
+                </p>
+
+                <p class="shop-modal-description" id="modalDescription">
+                    説明を読み込み中です。
+                </p>
+
+                <div class="shop-modal-location">
+                    <div class="shop-modal-location-row">
+                        <strong>出店場所：</strong>
+                        <span id="modalLocation">-</span>
+                    </div>
+
+                    <a id="modalMapLink" href="#">
+                        マップで確認する
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        const foodShopTabs = document.getElementById('foodShopTabs');
+        const experienceShopTabs = document.getElementById('experienceShopTabs');
+
+        const modal = document.getElementById('shopModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalProduct = document.getElementById('modalProduct');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalImage = document.getElementById('modalImage');
+        const modalLocation = document.getElementById('modalLocation');
+        const modalMapLink = document.getElementById('modalMapLink');
+        const closeBtn = document.querySelector('.shop-modal-close');
+
+        let modalImageCandidates = [];
+        let modalImageIndex = 0;
+
+        function openModal(shop) {
+            modalTitle.textContent = shop.name || '団体名';
+            modalProduct.textContent = shop.product || '未定';
+            modalDescription.textContent =
+                shop.description || '説明が登録されていません。';
+
+            // 出展場所
+            modalLocation.textContent = shop.location || '模擬店エリア';
+
+            // マップへのリンク
+            modalMapLink.href =
+                `./map.html?map=${encodeURIComponent(shop.map || 'stalls')}`;
+            modalMapLink.style.display = '';
+
+            // 画像
+            modalImageCandidates = shop.image
+                ? [shop.image]
+                : ['jpg', 'png', 'jpeg'].map(
+                    extension => `./images/shop_${shop.name}.${extension}`
+                );
+
+            modalImageIndex = 0;
+            modalImage.src = modalImageCandidates[modalImageIndex];
+            modalImage.alt = shop.name || '模擬店';
+
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+        }
+
+        function createShopTab(shop) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'shop-tab';
+            button.id = shop.id;
+            button.innerHTML = `
+                <span class="shop-tab-name">${shop.name}</span>
+                <span class="shop-tab-product">${shop.product || '販売内容'}</span>
+            `;
+            button.addEventListener('click', () => openModal(shop));
+            return button;
+        }
+
+        fetch('./scripts/shops.json')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('shops.jsonを読み込めませんでした');
+                }
+                return response.json();
+            })
+            .then((shops) => {
+                if (!Array.isArray(shops) || shops.length === 0) {
+                    throw new Error('模擬店データがありません');
+                }
+
+                shops.forEach((shop) => {
+                    const shopTabs = shop.category === 'experience'
+                        ? experienceShopTabs
+                        : foodShopTabs;
+                    shopTabs.appendChild(createShopTab(shop));
+                });
+
+                const requestedShopId = window.location.hash.slice(1);
+                const requestedShop = shops.find(shop => shop.id === requestedShopId);
+                if (requestedShop) {
+                    openModal(requestedShop);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                foodShopTabs.innerHTML = '<div class="shop-error">模擬店の情報を読み込めませんでした。</div>';
+                experienceShopTabs.innerHTML = '<div class="shop-error">模擬店の情報を読み込めませんでした。</div>';
+            });
+
+        closeBtn.addEventListener('click', closeModal);
+
+        modalImage.addEventListener('error', () => {
+            modalImageIndex += 1;
+            if (modalImageIndex < modalImageCandidates.length) {
+                modalImage.src = modalImageCandidates[modalImageIndex];
+            } else {
+                modalImage.src = './images/shop.jpg';
+            }
+        });
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('open')) {
+                closeModal();
+            }
+        });
+    </script>
+
+    <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="松江高専 高専祭の参加者同士で情報を共有できる掲示板です。">
+  <meta property="og:title" content="掲示板 | 松江高専 高専祭">
+  <meta property="og:description" content="松江高専 高専祭の参加者同士で情報を共有できる掲示板です。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://kosensai.matsue-ct.ac.jp/images/kosensai-ilust.png">
+  <meta property="og:url" content="https://kosensai.matsue-ct.ac.jp/bulletin.html">
+  <meta property="og:site_name" content="松江高専 高専祭特設WEBページ">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./scripts/tweet.js"></script>
+  <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+  <title>掲示板 - 高専祭</title>
+
+  <style>
+    .post-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .postcard {
+      width: 100%;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    .btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    .message {
+      display: none;
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .message.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .message.info {
+      background: #d1ecf1;
+      color: #0c5460;
+    }
+
+    .post-item {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+
+    .post-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .post-status.published {
+      color: green;
+    }
+
+    .post-status.pending {
+      color: orange;
+    }
+
+    .post-status.rejected {
+      color: red;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    .spinner {
+      border: 3px solid #eee;
+      border-top: 3px solid #007bff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .post-reactions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .reaction-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #d0d7de;
+      background: #f8f9fb;
+      color: #334155;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .reaction-btn:hover {
+      transform: translateY(-1px);
+      border-color: #94a3b8;
+      background: #fff;
+    }
+
+    .reaction-btn.active {
+      background: #e8f2ff;
+      border-color: #4f86ff;
+      color: #174ea6;
+    }
+
+    .reaction-btn.heart.active {
+      background: #ffe8ef;
+      border-color: #ff6b91;
+      color: #b4235d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <a href="./index.html" class="home-link">
+      <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+    </a>
+    <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+  </div>
+
+ <nav id="nav">
+        <div class="announcement-wrapper">
+
+            <!-- お知らせ -->
+            <div class="announcement-ticker info-ticker">
+                <div class="ticker-label">
+                    お知らせ
+                </div>
+
+                <div class="ticker-container">
+                    <div id="ticker-content" class="ticker-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav-list">
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    高専祭を知る
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./about.html">高専祭について</a></li>
+                    <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    楽しむ・参加する
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./shop.html">模擬店紹介</a></li>
+                    <li><a href="./guest.html">ゲスト紹介</a></li>
+                    <li><a href="./event.html">イベント紹介</a></li>
+<!--                     <li><a href="./exhibition.html">展示紹介</a></li>
+ -->                    <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    会場案内
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./schedule.html">スケジュール</a></li>
+                    <li><a href="./map.html">会場マップ</a></li>
+                    <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                </ul>
+            </li>
+
+
+
+            <li class="nav-group">
+                <button class="nav-group-toggle">
+                    その他
+                    <span>＋</span>
+                </button>
+
+                <ul class="nav-submenu">
+                    <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                    <li><a href="./announcements.html">お知らせ</a></li>
+                    <li><a href="./bulletin.html">掲示板</a></li>
+                    <li><a href="./aboutme.html">このサイトについて</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+  <main>
+
+    <h2>掲示板</h2>
+
+    <div class="post-container">
+
+
+      <div id="message" class="message"></div>
+
+      <section class="postcard">
+        <h2>投稿する</h2>
+
+        <form id="postForm">
+          <textarea id="postContent" maxlength="500"></textarea>
+          <div style="text-align:right;">
+            <span id="charCount">0</span>/500
+          </div>
+          <button class="btn">投稿</button>
+        </form>
+      </section>
+
+      <section class="postcard">
+        <h2>最新投稿</h2>
+        <div id="postContainer">読み込み中...</div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer>
+
+    <!-- お問い合わせ・規約等 -->
+    <div class="footer-legal">
+
+      <a href="./privacy.html">プライバシーポリシー</a>
+
+      <span aria-hidden="true">|</span>
+
+      <a href="./contact.html">お問い合わせ</a>
+
+      <span aria-hidden="true">|</span>
+
+      <a href="./disclaimer.html">免責事項</a>
+
+      <span aria-hidden="true">|</span>
+
+      <a href="./copyright.html">著作権について</a>
+
+    </div>
+
+
+    <!-- コピーライト -->
+    <div class="footer-bottom">
+      <p> 2026 松江高専 高専祭実行委員会</p>
+    </div>
+  </footer>
+
+  <script src="./scripts/tweet.js"></script>
+  <script src="./scripts/script.js"></script>
+</body>
+
+</html>

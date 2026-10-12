@@ -1,0 +1,20 @@
+{
+  "events": [
+    {
+      "event_id": "event1",
+      "name": "大食い"
+    },
+    {
+      "event_id": "event2",
+      "name": "カラオケ"
+    },
+    {
+      "event_id": "event3",
+      "name": "フィジーク"
+    },
+    {
+      "event_id": "event4",
+      "name": "腕相撲"
+    }
+  ]
+}

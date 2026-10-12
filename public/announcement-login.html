@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+    <title>お知らせ - 高専祭</title>
+
+    <style>
+        .back-btn {
+            display: block;
+            width: 100%;
+            margin-top: 12px;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+
+            color: #555;
+            background: #f3f3f3;
+
+            border-radius: 6px;
+
+            transition: .2s;
+        }
+
+        .back-btn:hover {
+            background: #e6e6e6;
+        }
+
+        .login-card {
+            animation: fadeIn .25s ease;
+        }
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <body>
+
+        <div class="topbar">
+            <a href="./index.html" class="home-link">
+                <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+            </a>
+            <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+        </div>
+        <nav id="nav">
+            <ul>
+                <li><a href="./about.html">高専祭とは</a></li>
+                <li><a href="./guest.html">ゲスト紹介</a></li>
+                <li><a href="./shop.html">模擬店紹介</a></li>
+                <li><a href="./event.html">イベント紹介</a></li>
+                <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                <li><a href="./schedule.html">スケジュール</a></li>
+                <li><a href="./company.html">ご協賛企業紹介</a></li>
+                <li><a href="./map.html">会場マップ</a></li>
+                <li><a href="./about-kosen.html">松江高専とは</a></li>
+                <li><a href="./announcements.html">お知らせ</a></li>
+                <li><a href="./bulletin.html">掲示板</a></li>
+            </ul>
+        </nav>
+
+        <main>
+
+            <div id="loginScreen" class="login-container">
+
+                <div class="login-card">
+
+                    <h1>📢 お知らせ投稿</h1>
+
+                    <p class="subtitle">
+                        お知らせを投稿するにはログインしてください
+                    </p>
+
+                    <form id="loginForm">
+
+                        <div class="form-group">
+                            <label for="loginUsername">
+                                ユーザー名
+                            </label>
+
+                            <input type="text" id="loginUsername" placeholder="ユーザー名" autocomplete="username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">
+                                パスワード
+                            </label>
+
+                            <input type="password" id="loginPassword" placeholder="パスワード"
+                                autocomplete="current-password" required>
+                        </div>
+
+                        <button type="submit" class="login-btn">
+                            ログイン
+                        </button>
+
+                        <a href="./announcements.html" class="back-btn">
+                            ← お知らせ一覧へ戻る
+                        </a>
+
+                        <div id="loginMessage" class="login-message"></div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </main>
+
+                <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+        <script src="./scripts/announcement-login.js"></script>
+        <script src="./scripts/script.js"></script>
+
+
+        </script>
+    </body>
+
+</html>

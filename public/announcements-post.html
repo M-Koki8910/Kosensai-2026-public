@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./scripts/tweet.js"></script>
+  <link rel="icon" type="image/png" href="./images/tab-resize.png">
+
+  <title>お知らせ - 高専祭</title>
+
+  <style>
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 15px;
+    }
+
+    .announcement {
+      border-left: 5px solid #007bff;
+    }
+
+    .urgent {
+      border-left-color: red;
+    }
+
+    .important {
+      border-left-color: orange;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    .section-title {
+      margin: 20px 0 10px;
+      font-weight: bold;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 5px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .char-counter {
+
+      margin-top: -8px;
+
+      text-align: right;
+
+      color: #777;
+
+      font-size: 13px;
+    }
+
+    .submit-btn {
+
+      margin-top: 10px;
+
+      font-size: 16px;
+
+      font-weight: bold;
+    }
+
+    .secondary {
+
+      background: #6b7280;
+    }
+
+    .secondary:hover {
+
+      background: #4b5563;
+    }
+
+    #announcementForm {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    #announcementForm label {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    #announcementForm input,
+    #announcementForm textarea,
+    #announcementForm select {
+
+      width: 100%;
+      padding: 12px;
+
+      font-size: 16px;
+
+      border: 1px solid #ccc;
+      border-radius: 8px;
+
+      box-sizing: border-box;
+    }
+
+    #announcementForm textarea {
+
+      min-height: 180px;
+
+      resize: vertical;
+
+      line-height: 1.6;
+    }
+
+    #announcementForm select {
+
+      background: white;
+
+      cursor: pointer;
+    }
+
+    /* ローディング表示 */
+    .auth-check-loading {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .auth-check-loading p {
+      font-size: 16px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <a href="./index.html" class="home-link">
+      <img src="./images/logo.png" alt="高専祭TOP" class="logo">
+    </a>
+    <button class="menu-toggle" aria-label="メニューを開く">☰</button>
+  </div>
+
+  <nav id="nav">
+            <div class="announcement-wrapper">
+
+                <!-- お知らせ -->
+                <div class="announcement-ticker info-ticker">
+                    <div class="ticker-label">
+                        お知らせ
+                    </div>
+
+                    <div class="ticker-container">
+                        <div id="ticker-content" class="ticker-content"></div>
+                    </div>
+                </div>
+
+                <!-- 注意 -->
+                <div class="announcement-ticker warning-ticker">
+                    <div class="ticker-label">
+                        ⚠ 重要
+                    </div>
+
+                    <div class="ticker-container">
+                        <div class="ticker-content ticker-scroll">
+                            ＊＊＊このページは開発用テストページです。＊＊＊　　履歴の削除、Cookieの削除は行わないください。記録が消失する可能性があります。
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <ul>
+                <li><a href="./about.html">高専祭について</a></li>
+                <li><a href="./shop.html">模擬店紹介</a></li>
+                <li><a href="./guest.html">ゲスト紹介</a></li>
+                <li><a href="./event.html">イベント紹介</a></li>
+                <li><a href="./stamp-rally.html">スタンプラリー</a></li>
+                <li><a href="./company.html">ご協賛企業様紹介</a></li>
+                <li><a href="./schedule.html">スケジュール</a></li>
+                <li><a href="./map.html">会場マップ</a></li>
+                <li><a href="./tovisitors.html">ご来場のみなさまへ</a></li>
+                <li><a href="./announcements.html">お知らせ</a></li>
+                <li><a href="./bulletin.html">掲示板</a></li>
+                <li><a href="./lottery-entry.html">抽選会参加受付</a></li>
+                <li><a href="./aboutme.html">このサイトについて</a></li>
+            </ul>
+        </nav>
+
+  <main>
+
+    <div class="announcement-container">
+
+      <h1>お知らせ投稿</h1>
+
+      <div id="message" class="message"></div>
+
+      <!-- 認証チェック中の表示 -->
+      <div id="authCheckContainer" class="postcard auth-check-loading" style="display: none;">
+        <p>アクセス権を確認中...</p>
+      </div>
+
+      <!-- フォーム（初期状態は非表示） -->
+      <section class="postcard" id="formContainer" style="display: none;">
+
+        <div class="section-header">
+          <h2>新規投稿</h2>
+
+          <a href="./announcements.html" class="btn secondary">
+            一覧へ戻る
+          </a>
+        </div>
+
+        <form id="announcementForm">
+
+          <label>タイトル</label>
+          <input type="text" id="announcementTitle" maxlength="100" required>
+
+          <label>本文</label>
+          <textarea id="announcementContent" maxlength="1000" required></textarea>
+
+          <div class="char-counter">
+            <span id="charCount">0</span>/1000
+          </div>
+
+          <label>重要度</label>
+
+          <select id="announcementImportance">
+            <option value="normal">通常</option>
+            <option value="important">重要</option>
+            <option value="urgent">緊急</option>
+          </select>
+
+          <label>公開開始日時</label>
+          <input type="datetime-local" id="announcementPublishedAt" required>
+
+          <label>公開終了日時</label>
+          <input type="datetime-local" id="announcementExpiresAt" required>
+
+          <label class="always-publish-label">
+            <input type="checkbox" id="announcementAlwaysPublish">
+            時間を制限せず常時公開する
+          </label>
+
+          <button class="btn submit-btn">
+            投稿する
+          </button>
+
+        </form>
+
+      </section>
+
+    </div>
+
+  </main>
+
+          <footer>
+
+        <!-- お問い合わせ・規約等 -->
+        <div class="footer-legal">
+
+            <a href="./privacy.html">プライバシーポリシー</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./contact.html">お問い合わせ</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./disclaimer.html">免責事項</a>
+
+            <span aria-hidden="true">|</span>
+
+            <a href="./copyright.html">著作権について</a>
+
+        </div>
+
+
+        <!-- コピーライト -->
+        <div class="footer-bottom">
+            <p> 2026 松江高専 高専祭実行委員会</p>
+        </div>
+    </footer>
+
+  <script src="./scripts/tweet.js"></script>
+  <script src="./scripts/script.js"></script>
+
+  <script>
+    /**
+     * ページロード時の認証チェック
+     * - アクセス権を確認
+     * - フォームを表示/非表示
+     * - 未認証/権限なしの場合は適切にリダイレクト
+     */
+    document.addEventListener('DOMContentLoaded', async function () {
+      const authCheckContainer = document.getElementById('authCheckContainer');
+      const formContainer = document.getElementById('formContainer');
+
+      // 認証チェック中の表示
+      authCheckContainer.style.display = 'block';
+      formContainer.style.display = 'none';
+
+      try {
+        const response = await fetch('/api/auth/check-announcement-access');
+        const data = await response.json();
+
+        if (!data.ok) {
+          // 認証失敗 or 権限なし
+          if (response.status === 401) {
+            // セッション失効
+            console.log('✗ セッション失効 - ログイン画面へ');
+            alert('セッションが失効しました。再度ログインしてください。');
+            window.location.href = './login.html?redirect=announcements-post.html';
+          } else if (response.status === 403) {
+            // 権限なし
+            console.log('✗ 権限なし');
+            alert('お知らせ投稿権限がありません。\n\n管理画面へのアクセス権を確認してください。');
+            window.location.href = './announcements.html';
+          }
+          return;
+        }
+
+        // ✓ 認証済み＆権限あり
+        console.log('✓ アクセス許可:', data.username, data.role);
+
+        // フォーム表示
+        authCheckContainer.style.display = 'none';
+        formContainer.style.display = 'block';
+
+        // 通常の初期化処理
+        AnnouncementPost.init();
+
+      } catch (error) {
+        console.error('認証チェックエラー:', error);
+        alert('ページ初期化中にエラーが発生しました。');
+        window.location.href = './announcements.html';
+      }
+    });
+  </script>
+</body>
+
+</html>
