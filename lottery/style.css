@@ -1,0 +1,566 @@
+:root {
+    --bg-color: #f4f6f9;       /* 明るい背景 */
+    --app-bg: #ffffff;         /* メインエリアの白ベース */
+    --card-bg: #f8fafc;        /* 当選カードの背景 */
+    --text-color: #1e293b;     /* メインの文字色 */
+    --accent-color: #0284c7;   /* 抽選番号：鮮やかなブルー */
+    --item-accent: #ea580c;    /* 景品番号：活気のあるオレンジ */
+    --border-radius: 12px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 【変更】最大幅を撤去し、画面いっぱいに広げる */
+#app {
+    width: 98vw;
+    height: 95vh;
+    background: var(--app-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    box-sizing: border-box;
+    border: 1px solid #e2e8f0;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+}
+
+/* スタート画面の装飾 */
+#screen-start {
+    justify-content: center;
+    gap: 2.5rem;
+}
+.main-title {
+    font-size: 4.2rem;
+    color: #0f172a;
+    letter-spacing: 4px;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin: 0;
+}
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 340px;
+}
+.data-badge {
+    font-size: 0.95rem;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+}
+
+/* 抽選画面ヘッダー */
+#grade-badge {
+    background-color: rgba(2, 132, 199, 0.08);
+    color: var(--accent-color);
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: 1px solid var(--accent-color);
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+#prize-title { font-size: 2.6rem; margin: 0; color: #0f172a; }
+#status-message { font-size: 1.4rem; color: #475569; margin: 0.5rem 0 1.5rem 0; height: 1.5rem; font-weight: bold;}
+
+/* 【変更】パタパタ表示エリアも画面横幅いっぱいに使うよう flex-grow を調整 */
+#result-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    flex-grow: 1;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+/* 当選大型カード（明るいデザイン） */
+.winner-card {
+    background: var(--card-bg);
+    padding: 1.2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    min-width: 280px;
+}
+.box-label { font-size: 0.9rem; font-weight: bold; margin-bottom: 0.3rem; letter-spacing: 1px; }
+.box-label.ticket { color: var(--accent-color); }
+.box-label.item { color: var(--item-accent); }
+
+.ticket-box, .item-box { display: flex; gap: 0.4rem; justify-content: center; }
+
+/* 確定後の景品名テキスト（明るく見やすい配色） */
+.item-text-name {
+    font-size: 1.2rem;
+    color: #0f172a;
+    font-weight: bold;
+    margin-top: 0.4rem;
+    background: #e2e8f0;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    min-height: 1.5rem;
+    width: 90%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 【重要】パタパタの1桁（暗いプレートにして白文字を浮き立たせ、視認性を維持） */
+.flap-digit {
+    position: relative;
+    width: 44px;
+    height: 64px;
+    background-color: #1e293b; /* 濃いチャコールグレー */
+    color: #ffffff;
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 64px;
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.1), 0 4px 6px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+.ticket-box .flap-digit { border-bottom: 3px solid var(--accent-color); }
+.item-box .flap-digit { border-bottom: 3px solid var(--item-accent); }
+.flap-digit::after {
+    content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 1px; background-color: rgba(0, 0, 0, 0.4); z-index: 2;
+}
+
+.rolling { animation: rollEffect 0.12s linear infinite; }
+@keyframes rollEffect {
+    0% { transform: rotateX(0deg); filter: brightness(1); }
+    50% { transform: rotateX(90deg); filter: brightness(0.6); }
+    100% { transform: rotateX(0deg); filter: brightness(1); }
+}
+
+/* ボタン周り（マテリアル・モダンライト風） */
+button {
+    font-size: 1.3rem; padding: 0.8rem 2.5rem; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; transition: all 0.2s ease;
+}
+.btn-primary { background-color: var(--accent-color); color: #ffffff; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25); }
+.btn-secondary { background-color: #64748b; color: #fff; }
+.btn-text { background: none; color: #94a3b8; font-size: 0.95rem; margin-top: 0.5rem; text-decoration: underline; }
+button:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+button:disabled { background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; box-shadow: none; transform: none; }
+#action-btn { background-color: var(--item-accent); color: #ffffff; font-size: 1.5rem; padding: 0.8rem 4.5rem; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3); }
+.guide-tip { font-size: 0.9rem; color: #64748b; margin-top: 0.3rem;}
+
+/* 設定画面スタイル（ライトモード仕様） */
+#screen-config { align-items: stretch; text-align: left; overflow-y: auto; }
+#screen-config h2 { margin: 0 0 1rem 0; color: var(--accent-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+.config-section { background: #f8fafc; padding: 1.2rem; border-radius: 8px; margin-bottom: 1rem; border: 1px solid #e2e8f0; }
+.config-section h3 { margin: 0 0 1rem 0; font-size: 1.1rem; color: #334155; }
+.config-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.config-item input { background: #fff; border: 1px solid #cbd5e1; color: #0f172a; padding: 0.5rem; border-radius: 4px; width: 80px; font-size: 1.1rem; text-align: center; font-weight: bold; }
+.tip { font-size: 0.85rem; color: #64748b; }
+
+/* データ確認用の表（ライトモード） */
+.viewer-split { display: flex; gap: 1.5rem; }
+.viewer-split > div { flex: 1; display: flex; flex-direction: column; }
+.viewer-split h4 { margin: 0 0 0.5rem 0; font-size: 0.95rem; color: #475569; }
+.table-scroll { height: 220px; overflow-y: auto; background: #fff; border-radius: 6px; border: 1px solid #e2e8f0; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th, td { padding: 0.6rem; text-align: left; border-bottom: 1px solid #e2e8f0; color: #334155; }
+th { background: #f1f5f9; color: #475569; position: sticky; top: 0; font-weight: bold; }
+code { background: #f1f5f9; padding: 0.2rem 0.4rem; border-radius: 4px; color: #0f172a; font-family: monospace; font-size: 0.9rem;}
+#screen-config footer { display: flex; justify-content: center; margin-top: 1rem; }
+.results-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.results-header h3 { margin: 0; }
+.btn-danger { background-color: #dc2626; color: #fff; font-size: 0.9rem; padding: 0.55rem 1rem; border-radius: 6px; }
+.results-table-scroll { height: 240px; }
+
+#screen-waiting {
+    background: #f8fafc;
+    color: #172033;
+    justify-content: flex-start;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+
+/* =========================
+   ヘッダー
+========================= */
+
+.waiting-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.waiting-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.brand-badge {
+    display: inline-block;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 0.45rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.waiting-brand h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 3rem);
+    letter-spacing: 0.08em;
+    color: #172033;
+}
+
+.waiting-clock {
+    background: #ffffff;
+    color: #172033;
+    border: 1px solid #dbe2ea;
+    border-radius: 14px;
+    padding: 0.7rem 1.2rem;
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================
+   レーン全体
+========================= */
+
+.waiting-lanes {
+    width: 100%;
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 1rem;
+    min-height: 0;
+}
+
+
+/* =========================
+   各レーン
+========================= */
+
+.waiting-lane {
+    width: 100%;
+    height: 0;
+    flex: 1;
+
+    min-height: 170px;
+
+    background: #ffffff;
+    border: 1px solid #dbe2ea;
+    border-radius: 18px;
+
+    padding: 1rem 1.2rem;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.06);
+}
+
+.waiting-lane h2 {
+    margin: 0 0 0.7rem 0;
+
+    font-size: clamp(1.4rem, 2vw, 2.1rem);
+
+    color: #172033;
+    letter-spacing: 0.06em;
+
+    flex-shrink: 0;
+
+    border-left: 6px solid #2563eb;
+    padding-left: 0.7rem;
+}
+
+
+/* =========================
+   スクロール領域
+========================= */
+
+.lane-track {
+    position: relative;
+
+    width: 100%;
+    flex: 1;
+
+    overflow: hidden;
+    min-height: 0;
+
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+
+/* =========================
+   流れるコンテンツ
+========================= */
+
+.lane-track-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    gap: 0.8rem;
+
+    width: max-content;
+    height: 100%;
+
+    animation: laneScrollX 120s linear infinite;
+
+    will-change: transform;
+}
+
+.lane-text .lane-track-inner {
+    padding: 0.4rem;
+}
+
+.lane-prizes .lane-track-inner {
+    padding: 0.4rem;
+}
+
+
+/* =========================
+   テキストカード
+========================= */
+
+.text-item {
+    display: flex;
+    align-items: center;
+
+    flex: 0 0 auto;
+
+    /* ボックスを大型化 */
+    min-width: 480px;
+    max-width: 600px;
+    height: 100%;
+
+    border-radius: 18px;
+
+    background: #ffffff;
+    border: 1px solid #dbe2ea;
+
+    /* 内側の余白も増やす */
+    padding: 1.2rem 1.5rem;
+
+    box-sizing: border-box;
+
+    /* 文字を大型化 */
+    font-size: clamp(1.2rem, 1.7vw, 1.8rem);
+
+    line-height: 1.5;
+
+    color: #263247;
+
+    box-shadow: 0 2px 7px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =========================
+   景品カード
+========================= */
+
+.prize-item {
+    flex: 0 0 auto;
+    height: 100%;
+}
+
+.prize-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 440px;
+    height: 100%;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+    border: 1px solid #dbe2ea;
+
+    padding: 1.2rem 1.5rem;
+    box-sizing: border-box;
+
+    box-shadow: 0 2px 7px rgba(15, 23, 42, 0.05);
+}
+
+.prize-card strong {
+    font-size: clamp(1.4rem, 2vw, 2.1rem);
+    line-height: 1.4;
+    text-align: center;
+    color: #172033;
+}
+
+
+/* =========================
+   フッター
+========================= */
+
+.waiting-footer {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+
+/* =========================
+   横スクロール
+========================= */
+
+@keyframes laneScrollX {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+
+/* =========================
+   レスポンシブ
+========================= */
+
+@media (max-width: 1100px) {
+    .waiting-lanes {
+        gap: 0.8rem;
+    }
+
+    .waiting-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .waiting-lane {
+        padding: 0.7rem;
+    }
+}
+
+#debug-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: none;
+
+    z-index: 99999;
+
+    padding: 16px;
+
+    background: rgba(0, 0, 0, 0.92);
+}
+
+#debug-panel.visible {
+    display: block;
+}
+
+.debug-panel-inner {
+    max-width: 900px;
+    margin: 0 auto;
+
+    padding: 20px;
+
+    border: 2px solid #ff5555;
+    border-radius: 12px;
+
+    background: #222;
+    color: white;
+}
+
+.debug-title {
+    margin-bottom: 16px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    color: #ff6666;
+}
+
+.debug-row {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 10px;
+}
+
+.debug-row label {
+    width: 100px;
+}
+
+.debug-row input {
+    width: 180px;
+
+    padding: 8px;
+
+    font-size: 18px;
+}
+
+.debug-buttons {
+    display: flex;
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.debug-buttons button {
+    padding: 8px 16px;
+
+    cursor: pointer;
+}
+
+.debug-status {
+    margin-top: 12px;
+
+    font-size: 14px;
+}

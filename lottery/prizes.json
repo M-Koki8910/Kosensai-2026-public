@@ -1,0 +1,251 @@
+[
+  {
+    "grade_name": "1等",
+    "items": [
+      {
+        "item_id": 101,
+        "item_name": "Nintendo Switch 2"
+      },
+      {
+        "item_id": 102,
+        "item_name": "iPad Air"
+      },
+      {
+        "item_id": 103,
+        "item_name": "JTBトラベルギフト"
+      },
+      {
+        "item_id": 104,
+        "item_name": "ReFa ビューテックS＋（ドライヤー）"
+      },
+      {
+        "item_id": 105,
+        "item_name": "ReFa ストレートアイロン"
+      }
+    ]
+  },
+  {
+    "grade_name": "2等",
+    "items": [
+      {
+        "item_id": 201,
+        "item_name": "スターバックスギフトカード(1万円分)"
+      },
+      {
+        "item_id": 202,
+        "item_name": "マックカード(1万円分)"
+      },
+      {
+        "item_id": 203,
+        "item_name": "SoundCore 3 (ワイヤレススピーカー)"
+      },
+      {
+        "item_id": 204,
+        "item_name": "抱き枕"
+      },
+      {
+        "item_id": 205,
+        "item_name": "電気ケトル"
+      },
+      {
+        "item_id": 206,
+        "item_name": "パネルヒーター"
+      },
+      {
+        "item_id": 207,
+        "item_name": "Amazonギフトカード(1万円分)"
+      },
+      {
+        "item_id": 208,
+        "item_name": "カタログギフト(なんでも 1万円分)"
+      },
+      {
+        "item_id": 209,
+        "item_name": "カタログギフト(お肉 1万円分)"
+      },
+      {
+        "item_id": 210,
+        "item_name": "SoundCore P42i (ワイヤレスイヤホン)"
+      }
+    ]
+  },
+  {
+    "grade_name": "3等",
+    "items": [
+      {
+        "item_id": 301,
+        "item_name": "タンブラー"
+      },
+      {
+        "item_id": 302,
+        "item_name": "マグカップ"
+      },
+      {
+        "item_id": 303,
+        "item_name": "ReFa ハートブラシ"
+      },
+      {
+        "item_id": 304,
+        "item_name": "タイムロッキングコンテナ"
+      },
+      {
+        "item_id": 305,
+        "item_name": "アロマディフューザー"
+      },
+      {
+        "item_id": 306,
+        "item_name": "バランスボール"
+      },
+      {
+        "item_id": 307,
+        "item_name": "ミニホットプレート"
+      },
+      {
+        "item_id": 308,
+        "item_name": "水筒"
+      },
+      {
+        "item_id": 309,
+        "item_name": "ごつ盛り 焼きそばソース＋塩 24個"
+      },
+      {
+        "item_id": 310,
+        "item_name": "モンスター(ピンク) 24缶"
+      },
+      {
+        "item_id": 311,
+        "item_name": "今治タオルセット"
+      },
+      {
+        "item_id": 312,
+        "item_name": "アイマスク"
+      },
+      {
+        "item_id": 313,
+        "item_name": "ブランケット"
+      },
+      {
+        "item_id": 314,
+        "item_name": "小型冷蔵庫"
+      },
+      {
+        "item_id": 315,
+        "item_name": "一蘭 カップ麺 12個"
+      }
+    ]
+  },
+  {
+    "grade_name": "4等",
+    "items": [
+      {
+        "item_id": 401,
+        "item_name": "レポート用紙 10冊"
+      },
+      {
+        "item_id": 402,
+        "item_name": "レポート用紙 10冊"
+      },
+      {
+        "item_id": 403,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 404,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 405,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 406,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 407,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 408,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 409,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 410,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 411,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 412,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 413,
+        "item_name": "色紙"
+      },
+      {
+        "item_id": 414,
+        "item_name": "お菓子詰め合わせ"
+      },
+      {
+        "item_id": 415,
+        "item_name": "お菓子詰め合わせ"
+      }
+    ]
+  },
+  {
+    "grade_name": "局員賞",
+    "items": [
+      {
+        "item_id": 501,
+        "item_name": "KINUJO W ヘアアイロン (総務)"
+      },
+      {
+        "item_id": 502,
+        "item_name": "Brighte ELEKI LIFT(企画)"
+      },
+      {
+        "item_id": 503,
+        "item_name": "プラモデル ガンダム＋工具セット (報道)"
+      },
+      {
+        "item_id": 504,
+        "item_name": "マッサージガン(体育)"
+      },
+      {
+        "item_id": 505,
+        "item_name": "スーパーファミコン(総括)"
+      },
+      {
+        "item_id": 506,
+        "item_name": "Anker Power Bank 20000 (図書)"
+      },
+      {
+        "item_id": 507,
+        "item_name": "Anker Soundcore Space 2 (会計)"
+      },
+      {
+        "item_id": 508,
+        "item_name": "リバプールFC オリジナルス トラックトップ(L)(美化)"
+      },
+      {
+        "item_id": 509,
+        "item_name": "GXTRACE ゲーミングチェア(議長)"
+      },
+      {
+        "item_id": 510,
+        "item_name": "Jo MALON イングリッシュ ペアー & フリージア(文化)"
+      },
+      {
+        "item_id": 511,
+        "item_name": "Fire TV Stick 4K (風紀)"
+      }
+    ]
+  }
+]

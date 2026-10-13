@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高専祭 抽選会用ページ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">
+
+        <div id="screen-waiting" class="screen" style="display: none;">
+            <header class="waiting-header">
+                <div class="waiting-brand">
+                    <span class="brand-badge">高専祭 2026</span>
+                    <h1>抽選会開始までしばらくお待ちください</h1>
+                </div>
+                <div id="waiting-clock" class="waiting-clock">--:--</div>
+            </header>
+
+            <main class="waiting-lanes">
+                <section class="waiting-lane lane-text">
+                    <h2>抽選の進め方</h2>
+                    <div class="lane-track">
+                        <div id="wait-step-list" class="lane-track-inner"></div>
+                    </div>
+                </section>
+
+                <section class="waiting-lane lane-text">
+                    <h2>注意事項</h2>
+                    <div class="lane-track">
+                        <div id="wait-note-list" class="lane-track-inner"></div>
+                    </div>
+                </section>
+
+                <section class="waiting-lane lane-prizes">
+                    <h2>景品情報</h2>
+                    <div class="lane-track">
+                        <div id="wait-prize-list" class="lane-track-inner"></div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="waiting-footer">
+                <button id="back-to-start-from-waiting" class="btn-secondary">戻る</button>
+                <button id="open-draw-from-waiting" class="btn-primary">抽選を開始</button>
+            </footer>
+        </div>
+
+        <div id="screen-start" class="screen">
+            <h1 class="main-title">高専祭 抽選会</h1>
+            <div class="menu-buttons">
+                <button id="start-draw-btn" class="btn-primary">抽選を開始する</button>
+                <button id="open-waiting-btn" class="btn-secondary">待機画面を表示</button>
+                <button id="open-config-btn" class="btn-secondary">システム設定・データ確認</button>
+            </div>
+            <div id="start-load-status" class="data-badge">データ読込中...</div>
+        </div>
+
+        <div id="screen-draw" class="screen" style="display: none;">
+            <header>
+                <div id="grade-badge"></div>
+                <h1 id="prize-title">---</h1>
+            </header>
+            <main>
+                <div id="status-message">Spaceキーまたはボタンで抽選開始</div>
+                <div id="result-container">
+                </div>
+            </main>
+            <footer>
+                <button id="action-btn">抽選開始</button>
+                <div class="guide-tip">操作：[Space] 開始 / [Enter] 次へ</div>
+                <button id="back-to-start-draw" class="btn-text">スタート画面に戻る</button>
+            </footer>
+        </div>
+
+        <div id="screen-config" class="screen" style="display: none;">
+            <h2>システム設定 & データ確認</h2>
+
+            <div class="config-section">
+                <h3>🛠️ 抽選実行設定</h3>
+                <div class="config-item">
+                    <label for="config-draw-count">一度に同時抽選を行う件数:</label>
+                    <input type="number" id="config-draw-count" min="1" max="10" value="5">
+                    <span class="tip">※景品残数がこれより少ない場合は自動で残数分のみ抽選します</span>
+                </div>
+                <button id="save-config-btn" class="btn-primary">設定を保存する</button>
+
+            </div>
+
+            <div class="config-section data-viewer">
+                <h3>📦 読み込まれたデータの一覧</h3>
+                <div class="viewer-split">
+                    <div>
+                        <h4>景品データ一覧 (<span id="count-prizes-label">0</span>等枠)</h4>
+                        <div class="table-scroll">
+                            <table id="table-prizes">
+                                <thead>
+                                    <tr>
+                                        <th>等</th>
+                                        <th>枠名</th>
+                                        <th>景品番号 : 景品名</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <h4>参加者データ一覧 (計<span id="count-participants-label">0</span>名)</h4>
+                        <div class="table-scroll">
+                            <table id="table-participants">
+                                <thead>
+                                    <tr>
+                                        <th>抽選番号</th>
+                                        <th>口数 (重み)</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-section data-viewer">
+                <div class="results-header">
+                    <h3>🏆 当選結果一覧 (<span id="count-results-label">0</span>件)</h3>
+                    <button id="clear-results-btn" class="btn-danger">当選結果を全削除</button>
+                </div>
+                <div class="table-scroll results-table-scroll">
+                    <table id="table-lottery-results">
+                        <thead>
+                            <tr>
+                                <th>抽選番号</th>
+                                <th>景品番号</th>
+                                <th>景品名</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <footer>
+                <button id="close-config-btn" class="btn-secondary">スタート画面へ戻る</button>
+            </footer>
+        </div>
+
+    </div>
+
+    <audio id="sound-waiting" src="./asset/BGM-lottery.mp3" loop preload="auto"></audio>
+    <audio id="sound-roll" src="./asset/roll-loop.wav" loop preload="auto"></audio>
+    <audio id="sound-stop" src="./asset/stop.mp3" preload="auto"></audio>
+    <audio id="sound-finish" src="./asset/end.mp3" preload="auto"></audio>
+
+    <script src="script copy.js"></script>
+</body>
+
+</html>
